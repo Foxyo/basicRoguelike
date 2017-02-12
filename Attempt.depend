@@ -1,0 +1,52 @@
+# depslib dependency file v1.0
+1486872809 source:/home/fox/Desktop/ProjektA/Attempt/Generator.cpp
+	"Generator.h"
+	<iostream>
+
+1486867496 /home/fox/Desktop/ProjektA/Attempt/Generator.h
+	<cstdlib>
+	<time.h>
+
+1486871300 source:/home/fox/Desktop/ProjektA/Attempt/main.cpp
+	<iostream>
+	<cstdlib>
+	<stdio.h>
+	<stdlib.h>
+	"Generator.h"
+	"mainFuncts.h"
+	"monsters.h"
+
+1486870614 /home/fox/Desktop/ProjektA/Attempt/mainFuncts.h
+	<iostream>
+	<cstdlib>
+	"Generator.h"
+	"monsters.h"
+
+1486821760 /home/fox/Desktop/ProjektA/Attempt/main.cpp
+	<iostream>
+	<cstdlib>
+	<stdio.h>
+	<stdlib.h>
+	"Generator.h"
+	"mainFuncts.h"
+
+1486871761 source:/home/fox/Desktop/ProjektA/Attempt/mainFuncts.cpp
+	<iostream>
+	<cstdlib>
+	<stdio.h>
+	"mainFuncts.h"
+
+1486871761 /home/fox/Desktop/ProjektA/Attempt/monsters.h
+	<iostream>
+	<cstdlib>
+	<stdio.h>
+	<stdlib.h>
+	"Generator.h"
+
+1486871761 source:/home/fox/Desktop/ProjektA/Attempt/monsters.cpp
+	"monsters.h"
+	<iostream>
+	<cstdlib>
+	<stdio.h>
+	<stdlib.h>
+
