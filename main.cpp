@@ -43,7 +43,7 @@ int main()
     {
         handlePlayerInput(newPlayer, lastTile, test, monsterList);
         if(turns > 0)
-        handleMonsterActions(monsterList, test);
+        handleMonsterActions(monsterList, test, newPlayer);
         monstersBehOneInfo(monsterList, test);
         //monstersInfoPrint(monsterList, test);
         test.mapDraw();

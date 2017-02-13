@@ -132,12 +132,13 @@ void displayPlayerInfo(player& newPlayer)
     cout << "Health: " << newPlayer.health << "    " << "Armor: " << newPlayer.defence << "    " << "Dmg: " << newPlayer.attackDamage;
 }
 
-void handleMonsterActions(newMonster monsterList[16], Generator& test)
+void handleMonsterActions(newMonster monsterList[16], Generator& test, player& newPlayer)
 {
     for(int i = 0; i < 16; i++)
     {
         if(monsterList[i].behaviourType == 1 && monsterList[i].placedCorrectly == 1)
         {
+
             int monsterMove = rand()%4 + 1;
 
             test.Map[monsterList[i].xPos][monsterList[i].yPos] = monsterList[i].lastTile;
@@ -186,7 +187,42 @@ void handleMonsterActions(newMonster monsterList[16], Generator& test)
             test.Map[monsterList[i].xPos][monsterList[i].yPos] = monsterList[i].symbol;
 
         }
+            if(monsterList[i].behaviourType == 2 && monsterList[i].placedCorrectly == 1)
+            {
+                if(abs((monsterList[i].xPos-1) - newPlayer.xPos) < abs(monsterList[i].xPos - newPlayer.xPos) && (test.Map[monsterList[i].xPos -1][monsterList[i].yPos] == '.' || test.Map[monsterList[i].xPos -1][monsterList[i].yPos] == '+'))
+                {
+                    test.Map[monsterList[i].xPos][monsterList[i].yPos] = monsterList[i].lastTile;
+                    monsterList[i].xPos--;
+                    monsterList[i].lastTile = test.Map[monsterList[i].xPos][monsterList[i].yPos];
+                    test.Map[monsterList[i].xPos][monsterList[i].yPos] = monsterList[i].symbol;
+                }
+                if(abs((monsterList[i].xPos+1) - newPlayer.xPos) < abs(monsterList[i].xPos - newPlayer.xPos) && (test.Map[monsterList[i].xPos +1][monsterList[i].yPos] == '.' || test.Map[monsterList[i].xPos +1][monsterList[i].yPos] == '+'))
+                {
+                    test.Map[monsterList[i].xPos][monsterList[i].yPos] = monsterList[i].lastTile;
+                    monsterList[i].xPos++;
+                    monsterList[i].lastTile = test.Map[monsterList[i].xPos][monsterList[i].yPos];
+                    test.Map[monsterList[i].xPos][monsterList[i].yPos] = monsterList[i].symbol;
+                }
+                if(abs((monsterList[i].yPos+1) - newPlayer.yPos) < abs(monsterList[i].yPos - newPlayer.yPos) && (test.Map[monsterList[i].xPos][monsterList[i].yPos + 1] == '.' || test.Map[monsterList[i].xPos][monsterList[i].yPos +1] == '+'))
+                {
+                    test.Map[monsterList[i].xPos][monsterList[i].yPos] = monsterList[i].lastTile;
+                    monsterList[i].yPos++;
+                    monsterList[i].lastTile = test.Map[monsterList[i].xPos][monsterList[i].yPos];
+                    test.Map[monsterList[i].xPos][monsterList[i].yPos] = monsterList[i].symbol;
+                }
+                if(abs((monsterList[i].yPos-1) - newPlayer.yPos) < abs(monsterList[i].yPos - newPlayer.yPos) && (test.Map[monsterList[i].xPos][monsterList[i].yPos - 1] == '.' || test.Map[monsterList[i].xPos][monsterList[i].yPos -1] == '+'))
+                {
+                    test.Map[monsterList[i].xPos][monsterList[i].yPos] = monsterList[i].lastTile;
+                    monsterList[i].yPos--;
+                    monsterList[i].lastTile = test.Map[monsterList[i].xPos][monsterList[i].yPos];
+                    test.Map[monsterList[i].xPos][monsterList[i].yPos] = monsterList[i].symbol;
+                }
+                else;
+
+            }
     }
+
+
 }
 
 

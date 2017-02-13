@@ -19,5 +19,5 @@ void printRoomsParameters(Generator& test);
 void printRoomEdges(Generator& test);
 void monstersInfoPrint(newMonster monsterList[16], Generator& test);
 void displayPlayerInfo(player& newPlayer);
-void handleMonsterActions(newMonster monsterList[16], Generator& test);
+void handleMonsterActions(newMonster monsterList[16], Generator& test, player& newPlayer);
 void monstersBehOneInfo(newMonster monsterList[16], Generator& test);
