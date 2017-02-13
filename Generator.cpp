@@ -539,6 +539,13 @@ int Generator::isLegitMove(int x, int y)
     else return 0;
 }
 
+int Generator::isLegitMoveMonster(int x, int y)
+{
+    if(Map[x][y] == '.' || Map[x][y] == '+')
+        return 1;
+    else return 0;
+}
+
 Generator::Generator()
 {
     this->Generate();

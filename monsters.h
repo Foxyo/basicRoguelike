@@ -20,6 +20,7 @@ struct newMonster
     int placedCorrectly;
     int xPosInit;
     int yPosInit;
+    char lastTile;
 };
 
 

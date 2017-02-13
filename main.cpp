@@ -5,6 +5,8 @@
 #include "Generator.h"
 #include "mainFuncts.h"
 #include "monsters.h"
+#include <thread>
+#include <chrono>
 
 
 using namespace std;
@@ -28,20 +30,28 @@ int main()
     newPlayer.yPos = test.ladderyPos[0];
     cout<<lastTile;
     int turns = 0;
-    printRoomEdges(test);
-    printRoomsParameters(test);
+    //printRoomEdges(test);
+    //printRoomsParameters(test);
     createMonster(monsterList);
     placeMonsters(test, lastTile, monsterList);
-    monstersInfoPrint(monsterList, test);
-    test.logicMapDraw();
+    monstersBehOneInfo(monsterList, test);
+    //monstersInfoPrint(monsterList, test);
+    //test.logicMapDraw();
     test.mapDraw();
 
     while(1)
     {
-        handlePlayerInput(newPlayer, lastTile, test);
+        handlePlayerInput(newPlayer, lastTile, test, monsterList);
+        if(turns > 0)
+        handleMonsterActions(monsterList, test);
+        monstersBehOneInfo(monsterList, test);
+        //monstersInfoPrint(monsterList, test);
         test.mapDraw();
-        test.logicMapDraw();
+        //displayPlayerInfo(newPlayer);
+        //test.logicMapDraw();
         turns++;
+        this_thread::sleep_for(chrono::milliseconds(10));
+
         // printRoomEdges(test);
         //printRoomsParameters(test);
 

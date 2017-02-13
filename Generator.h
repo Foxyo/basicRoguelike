@@ -15,6 +15,7 @@ public:
     void Generate();
     void mapDraw();
     void logicMapDraw();
+    int isLegitMoveMonster(int x, int y);
     int isLegitMove(int x, int y);
     int endRoomCount;
 

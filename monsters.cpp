@@ -72,15 +72,18 @@ void placeMonsters(Generator &test, char &lastTile, newMonster monsterList[16])
         if(xPos + test.fRoomEdgesX[i] >= test.lRoomEdgesX[i])
         {
             xPos = xPos - 3;
+            monsterList[i].xPos -= 3;
         }
 
         if(yPos + test.fRoomEdgesY[i] >= test.lRoomEdgesY[i])
         {
             yPos = yPos - 3;
+            monsterList[i].yPos -= 3;
         }
 
         if(test.Map[xPos + test.fRoomEdgesX[i]][yPos + test.fRoomEdgesY[i]] == '.')
         {
+            monsterList[i].lastTile = test.Map[test.fRoomEdgesX[i] + xPos][test.fRoomEdgesY[i] + yPos];
             test.Map[test.fRoomEdgesX[i] + xPos][test.fRoomEdgesY[i] + yPos] = monsterList[i].symbol;
             monsterList[i].placedCorrectly = 1;
 

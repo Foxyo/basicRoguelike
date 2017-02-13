@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include "mainFuncts.h"
 
-void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test)
+void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMonster monsterList[16])
 {
     system("stty raw");
     char input = getchar();
@@ -52,10 +52,12 @@ void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test)
         if(lastTile == 'H' && test.logicMap[newPlayer.xPos][newPlayer.yPos] != '0')
         {
             test.Generate();
-            test.mapDraw();
             newPlayer.xPos = test.ladderxPos[0];
             newPlayer.yPos = test.ladderyPos[0];
             lastTile = test.Map[test.ladderxPos[0]][test.ladderyPos[0]];
+            createMonster(monsterList);
+            placeMonsters(test, lastTile, monsterList);
+            test.mapDraw();
         }
         break;
     }
@@ -103,7 +105,87 @@ void monstersInfoPrint(newMonster monsterList[16], Generator& test)
         cout << "map xPos yPos val " << "/" <<test.Map[monsterList[i].xPos][monsterList[i].yPos] << "/" << endl;
         cout << "ID" << monsterList[i].ID << endl;
         cout << "PlacedCorrectly" << monsterList[i].placedCorrectly << endl;
+        cout << "lastTile " << monsterList[i].lastTile << endl;
         cout << endl;
+    }
+}
+
+void monstersBehOneInfo(newMonster monsterList[16], Generator& test)
+{
+    for(int i = 0; i < 16; i++)
+    {
+        if(monsterList[i].behaviourType == 1)
+        {
+            cout << "ID" << monsterList[i].ID << endl;
+            cout << "xPos " << monsterList[i].xPos << endl;
+            cout << "yPos " << monsterList[i].yPos << endl;
+            cout << "lastTile " << monsterList[i].lastTile << endl;
+            cout << "Map tile: " << test.Map[monsterList[i].xPos][monsterList[i].yPos];
+            cout << endl;
+        }
+    }
+
+}
+
+void displayPlayerInfo(player& newPlayer)
+{
+    cout << "Health: " << newPlayer.health << "    " << "Armor: " << newPlayer.defence << "    " << "Dmg: " << newPlayer.attackDamage;
+}
+
+void handleMonsterActions(newMonster monsterList[16], Generator& test)
+{
+    for(int i = 0; i < 16; i++)
+    {
+        if(monsterList[i].behaviourType == 1 && monsterList[i].placedCorrectly == 1)
+        {
+            int monsterMove = rand()%4 + 1;
+
+            test.Map[monsterList[i].xPos][monsterList[i].yPos] = monsterList[i].lastTile;
+
+            switch(monsterMove)
+            {
+            case 1:
+            {
+                if(test.isLegitMoveMonster(monsterList[i].xPos + 1, monsterList[i].yPos) == 1)
+                {
+                    monsterList[i].xPos++;
+                }
+                break;
+            }
+
+            case 2:
+            {
+                if(test.isLegitMoveMonster(monsterList[i].xPos - 1, monsterList[i].yPos) == 1)
+                {
+                    monsterList[i].xPos--;
+                }
+                break;
+            }
+
+            case 3:
+            {
+                if(test.isLegitMoveMonster(monsterList[i].xPos, monsterList[i].yPos + 1) == 1)
+                 {
+                    monsterList[i].yPos++;
+                }
+                break;
+            }
+
+            case 4:
+            {
+                if(test.isLegitMoveMonster(monsterList[i].xPos, monsterList[i].yPos - 1) == 1)
+                {
+                    monsterList[i].yPos--;
+                }
+                break;
+            }
+
+            }
+
+            monsterList[i].lastTile = test.Map[monsterList[i].xPos][monsterList[i].yPos];
+            test.Map[monsterList[i].xPos][monsterList[i].yPos] = monsterList[i].symbol;
+
+        }
     }
 }
 
