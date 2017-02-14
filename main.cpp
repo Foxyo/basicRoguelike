@@ -44,10 +44,10 @@ int main()
         handlePlayerInput(newPlayer, lastTile, test, monsterList);
         if(turns > 0)
         handleMonsterActions(monsterList, test, newPlayer);
-        monstersBehOneInfo(monsterList, test);
+        //monstersBehOneInfo(monsterList, test);
         //monstersInfoPrint(monsterList, test);
         test.mapDraw();
-        //displayPlayerInfo(newPlayer);
+        displayPlayerInfo(newPlayer);
         //test.logicMapDraw();
         turns++;
         this_thread::sleep_for(chrono::milliseconds(10));

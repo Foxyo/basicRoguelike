@@ -7,7 +7,7 @@
 
 newMonster selectMonster()
 {
-    int monsterType = rand()%3 + 1;
+    int monsterType = rand()%4 + 1;
     newMonster mob;
 
     switch(monsterType)
@@ -38,6 +38,14 @@ newMonster selectMonster()
         mob.attackDamage = 1;
         mob.behaviourType = 1;
         break; //random movement
+    }
+    case 4:
+    {
+        mob.symbol = 'T';
+        mob.health = 15;
+        mob.armour = 4;
+        mob.attackDamage = 3;
+        mob.behaviourType = 3;
     }
     }
     return mob;
@@ -84,6 +92,7 @@ void placeMonsters(Generator &test, char &lastTile, newMonster monsterList[16])
         if(test.Map[xPos + test.fRoomEdgesX[i]][yPos + test.fRoomEdgesY[i]] == '.')
         {
             monsterList[i].lastTile = test.Map[test.fRoomEdgesX[i] + xPos][test.fRoomEdgesY[i] + yPos];
+            monsterList[i].dominantTile = test.Map[test.fRoomEdgesX[i] + xPos][test.fRoomEdgesY[i] + yPos];
             test.Map[test.fRoomEdgesX[i] + xPos][test.fRoomEdgesY[i] + yPos] = monsterList[i].symbol;
             monsterList[i].placedCorrectly = 1;
 

@@ -21,6 +21,7 @@ struct newMonster
     int xPosInit;
     int yPosInit;
     char lastTile;
+    char dominantTile;
 };
 
 

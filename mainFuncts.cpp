@@ -8,6 +8,8 @@ void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMo
     system("stty raw");
     char input = getchar();
     system("stty cooked");
+    int xD = input;
+    cout << "/" << xD << "/" << endl;
 
     //cout<<lastTile<<endl;
     //cout<<test.Map[newPlayer.xPos][newPlayer.yPos]<<endl;
@@ -61,11 +63,134 @@ void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMo
         }
         break;
     }
+    case '\x20':
+    {
+        system("stty raw");
+        char input2 = getchar();
+        system("stty cooked");
+    switch(input2)
+    {
+    case 'a':
+    {
+       //cout << "stage1" << endl;
+       if(isMonster(newPlayer.xPos-1, newPlayer.yPos, test) == 1)
+        {
+            //cout << "p xPos p yPos" << newPlayer.xPos << " " << newPlayer.yPos;
+            //cout << "stage2" << endl;
+            int ID = findMonsterID(newPlayer.xPos-1, newPlayer.yPos, monsterList);
+            //cout << "stage3" << endl;
+            //cout << "ID: " << ID << endl;
+            monstersInfoPrint(monsterList, test);
+            //cout << "m xPos m yPos" << monsterList[ID].xPos << " " << monsterList[ID].yPos << endl;
+            monsterList[ID].health -= newPlayer.attackDamage;
+            monsterList[ID].behaviourType = 2;
+
+            if(monsterList[ID].health < 0)
+            {
+                //cout << "ayy" << endl;;
+                test.Map[newPlayer.xPos-1][newPlayer.yPos] = monsterList[ID].dominantTile;
+            }
+            //attackMonster(ID, monsterList, newPlayer.attackDamage);
+
+            //checkIfDead(ID, monsterList, test);
+        }
+        break;
+    }
+    case 'd':
+    {
+       if(isMonster(newPlayer.xPos+1, newPlayer.yPos, test) == 1)
+        {
+            int ID = findMonsterID(newPlayer.xPos+1, newPlayer.yPos, monsterList);
+            monstersInfoPrint(monsterList, test);
+            monsterList[ID].health -= newPlayer.attackDamage;
+            monsterList[ID].behaviourType = 2;
+            if(monsterList[ID].health < 0)
+            {
+                test.Map[newPlayer.xPos+1][newPlayer.yPos] = monsterList[ID].dominantTile;
+            }
+        }
+        break;
+    }
+    case 'w':
+    {
+       if(isMonster(newPlayer.xPos, newPlayer.yPos-1, test) == 1)
+        {
+            int ID = findMonsterID(newPlayer.xPos, newPlayer.yPos-1, monsterList);
+            monstersInfoPrint(monsterList, test);
+            monsterList[ID].health -= newPlayer.attackDamage;
+            monsterList[ID].behaviourType = 2;
+            if(monsterList[ID].health < 0)
+            {
+                test.Map[newPlayer.xPos][newPlayer.yPos-1] = monsterList[ID].dominantTile;
+            }
+        }
+        break;
+    }
+    case 's':
+    {
+       if(isMonster(newPlayer.xPos, newPlayer.yPos+1, test) == 1)
+        {
+            int ID = findMonsterID(newPlayer.xPos, newPlayer.yPos+1, monsterList);
+            monstersInfoPrint(monsterList, test);
+            monsterList[ID].health -= newPlayer.attackDamage;
+            monsterList[ID].behaviourType = 2;
+            if(monsterList[ID].health < 0)
+            {
+                test.Map[newPlayer.xPos][newPlayer.yPos+1] = monsterList[ID].dominantTile;
+            }
+        }
+        break;
+    }
+
+    }
 
 
     }
+    }
+
+
+
     lastTile = test.Map[newPlayer.xPos][newPlayer.yPos];
     test.Map[newPlayer.xPos][newPlayer.yPos] = '@';
+}
+
+int isMonster(int x, int y, Generator& test)
+{
+    if(test.Map[x][y] == 'G' || test.Map[x][y] == 'B' || test.Map[x][y] == 'x' || test.Map[x][y] == 'T')
+        return 1;
+    else return 0;
+}
+
+void checkIfDead(int ID, newMonster monsterList[16], Generator& test)
+{
+    if(monsterList[ID].health < 0)
+    {
+        test.Map[monsterList[ID].xPos][monsterList[ID].yPos] = monsterList[ID].lastTile;
+    }
+}
+void attackMonster(int ID, newMonster monsterList[16], int damage)
+{
+    monsterList[ID].health -= damage;
+}
+
+int findMonsterID(int x, int y, newMonster monsterList[16])
+{
+    cout << "x: y: " << x << " " << y << endl;
+    int found = -1;
+    int ID;
+    for(int i = 0; i < 16; i++)
+    {
+        cout << "x: y: i:" << x << " " << y << " " << i << endl;
+        if(monsterList[i].xPos == x && monsterList[i].yPos == y && found == -1)
+        {
+            ID = monsterList[i].ID;
+            found = 1;
+
+        }
+
+    }
+    return ID;
+
 }
 
 void printRoomEdges(Generator& test)
@@ -136,12 +261,13 @@ void handleMonsterActions(newMonster monsterList[16], Generator& test, player& n
 {
     for(int i = 0; i < 16; i++)
     {
-        if(monsterList[i].behaviourType == 1 && monsterList[i].placedCorrectly == 1)
+        if(monsterList[i].behaviourType == 1 && monsterList[i].placedCorrectly == 1 && monsterList[i].health > 0)
         {
 
             int monsterMove = rand()%4 + 1;
 
             test.Map[monsterList[i].xPos][monsterList[i].yPos] = monsterList[i].lastTile;
+
 
             switch(monsterMove)
             {
@@ -182,17 +308,20 @@ void handleMonsterActions(newMonster monsterList[16], Generator& test, player& n
             }
 
             }
-
+            if(test.Map[monsterList[i].xPos][monsterList[i].yPos] == '.' || test.Map[monsterList[i].xPos][monsterList[i].yPos] == '+')
+                monsterList[i].dominantTile = test.Map[monsterList[i].xPos][monsterList[i].yPos];
             monsterList[i].lastTile = test.Map[monsterList[i].xPos][monsterList[i].yPos];
             test.Map[monsterList[i].xPos][monsterList[i].yPos] = monsterList[i].symbol;
 
         }
-            if(monsterList[i].behaviourType == 2 && monsterList[i].placedCorrectly == 1)
+            if(monsterList[i].behaviourType == 2 && monsterList[i].placedCorrectly == 1 && monsterList[i].health > 0)
             {
                 if(abs((monsterList[i].xPos-1) - newPlayer.xPos) < abs(monsterList[i].xPos - newPlayer.xPos) && (test.Map[monsterList[i].xPos -1][monsterList[i].yPos] == '.' || test.Map[monsterList[i].xPos -1][monsterList[i].yPos] == '+'))
                 {
                     test.Map[monsterList[i].xPos][monsterList[i].yPos] = monsterList[i].lastTile;
                     monsterList[i].xPos--;
+                    if(test.Map[monsterList[i].xPos][monsterList[i].yPos] == '.' || test.Map[monsterList[i].xPos][monsterList[i].yPos] == '+')
+                        monsterList[i].dominantTile = test.Map[monsterList[i].xPos][monsterList[i].yPos];
                     monsterList[i].lastTile = test.Map[monsterList[i].xPos][monsterList[i].yPos];
                     test.Map[monsterList[i].xPos][monsterList[i].yPos] = monsterList[i].symbol;
                 }
@@ -200,6 +329,8 @@ void handleMonsterActions(newMonster monsterList[16], Generator& test, player& n
                 {
                     test.Map[monsterList[i].xPos][monsterList[i].yPos] = monsterList[i].lastTile;
                     monsterList[i].xPos++;
+                    if(test.Map[monsterList[i].xPos][monsterList[i].yPos] == '.' || test.Map[monsterList[i].xPos][monsterList[i].yPos] == '+')
+                        monsterList[i].dominantTile = test.Map[monsterList[i].xPos][monsterList[i].yPos];
                     monsterList[i].lastTile = test.Map[monsterList[i].xPos][monsterList[i].yPos];
                     test.Map[monsterList[i].xPos][monsterList[i].yPos] = monsterList[i].symbol;
                 }
@@ -207,6 +338,8 @@ void handleMonsterActions(newMonster monsterList[16], Generator& test, player& n
                 {
                     test.Map[monsterList[i].xPos][monsterList[i].yPos] = monsterList[i].lastTile;
                     monsterList[i].yPos++;
+                    if(test.Map[monsterList[i].xPos][monsterList[i].yPos] == '.' || test.Map[monsterList[i].xPos][monsterList[i].yPos] == '+')
+                        monsterList[i].dominantTile = test.Map[monsterList[i].xPos][monsterList[i].yPos];
                     monsterList[i].lastTile = test.Map[monsterList[i].xPos][monsterList[i].yPos];
                     test.Map[monsterList[i].xPos][monsterList[i].yPos] = monsterList[i].symbol;
                 }
@@ -215,6 +348,8 @@ void handleMonsterActions(newMonster monsterList[16], Generator& test, player& n
                     test.Map[monsterList[i].xPos][monsterList[i].yPos] = monsterList[i].lastTile;
                     monsterList[i].yPos--;
                     monsterList[i].lastTile = test.Map[monsterList[i].xPos][monsterList[i].yPos];
+                    if(test.Map[monsterList[i].xPos][monsterList[i].yPos] == '.' || test.Map[monsterList[i].xPos][monsterList[i].yPos] == '+')
+                        monsterList[i].dominantTile = test.Map[monsterList[i].xPos][monsterList[i].yPos];
                     test.Map[monsterList[i].xPos][monsterList[i].yPos] = monsterList[i].symbol;
                 }
                 else;

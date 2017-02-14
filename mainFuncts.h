@@ -21,3 +21,7 @@ void monstersInfoPrint(newMonster monsterList[16], Generator& test);
 void displayPlayerInfo(player& newPlayer);
 void handleMonsterActions(newMonster monsterList[16], Generator& test, player& newPlayer);
 void monstersBehOneInfo(newMonster monsterList[16], Generator& test);
+void checkIfDead(int ID, newMonster monsterList[16], Generator& test);
+void attackMonster(int ID, newMonster monsterList[16], int damage);
+int findMonsterID(int x, int y, newMonster monsterList[16]);
+int isMonster(int x, int y, Generator& test);
