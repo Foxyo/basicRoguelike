@@ -17,8 +17,8 @@ using namespace std;
 int main()
 {
     srand(time(NULL));
-    int gameDepth = rand()%10+3;
-    //int gameDepth = 0;
+    //int gameDepth = rand()%10+3;
+    int gameDepth = 1;
     player newPlayer;
     Generator test;
     newMonster monsterList[16];
@@ -45,7 +45,7 @@ int main()
     //monstersInfoPrint(monsterList, test);
     //test.logicMapDraw();
     system("clear");
-    cout << "You've got no idea why you'd let that old crook make you to visit this forsaken place." << endl;
+    cout << "You've got no idea why you'd let that old crook make you visit this forsaken place." << endl;
     this_thread::sleep_for(chrono::milliseconds(700));
     cout << "Perhaps it was the need of these shiny gold pieces that convinced you...?" << endl;
     this_thread::sleep_for(chrono::milliseconds(700));
@@ -70,7 +70,8 @@ int main()
 
     while(1)
     {
-        if(newPlayer.xPos == test.ladderxPos[1] && test.ladderyPos[1] == newPlayer.yPos)
+        cout << "pxPos pyPos lxPos lyPos"  << newPlayer.xPos << " " << newPlayer.yPos << " " << test.ladderxPos[1] << " " << test.ladderyPos[1] << endl;
+        if(newPlayer.xPos == test.ladderxPos[1] && test.ladderyPos[1] == newPlayer.yPos && lastTile == '*')
         {
             wonOrLost = 1;
             break;
@@ -90,7 +91,7 @@ int main()
         handlePlayerStatus(newPlayer, playerBackpack);
 
         if(turns > 0)
-        handleMonsterActions(monsterList, test, newPlayer);
+            handleMonsterActions(monsterList, test, newPlayer);
         //monstersBehOneInfo(monsterList, test);
         //monstersInfoPrint(monsterList, test);
         test.mapDraw();

@@ -45,55 +45,55 @@ string findDominantTrait(newItem itemList[500], int ID)
     }
     if(maxVal < itemList[ID].damage)
     {
-       maxVal = itemList[ID].damage;
-       maxValType = 4;
+        maxVal = itemList[ID].damage;
+        maxValType = 4;
     }
     switch(maxValType)
     {
-        case 1:
-        {
-            if(itemList[ID].itemType == 1)
-                return name = "Armour of Healthiness";
-            if(itemList[ID].itemType == 2)
-                return name = "Sword of Healthiness";
-            if(itemList[ID].itemType == 3)
-                return name = "Ring of Healthiness";
-            if(itemList[ID].itemType == 4)
-                return name = "Necklace of Healthiness";
-        }
-        case 2:
-        {
-            if(itemList[ID].itemType == 1)
-                return name = "Armour of Defence";
-            if(itemList[ID].itemType == 2)
-                return name = "Sword of Defence";
-            if(itemList[ID].itemType == 3)
-                return name = "Ring of Defence";
-            if(itemList[ID].itemType == 4)
-                return name = "Necklace of Defence";
-        }
-        case 3:
-        {
-            if(itemList[ID].itemType == 1)
-                return name = "Armour of Regeneration";
-            if(itemList[ID].itemType == 2)
-                return name = "Sword of Regeneration";
-            if(itemList[ID].itemType == 3)
-                return name = "Ring of Regeneration";
-            if(itemList[ID].itemType == 4)
-                return name = "Necklace of Regeneration";
-        }
-        case 4:
-        {
-            if(itemList[ID].itemType == 1)
-                return name = "Armour of Attack";
-            if(itemList[ID].itemType == 2)
-                return name = "Sword of Attack";
-            if(itemList[ID].itemType == 3)
-                return name = "Ring of Attack";
-            if(itemList[ID].itemType == 4)
-                return name = "Necklace of Attack";
-        }
+    case 1:
+    {
+        if(itemList[ID].itemType == 1)
+            return name = "Armour of Healthiness";
+        if(itemList[ID].itemType == 2)
+            return name = "Sword of Healthiness";
+        if(itemList[ID].itemType == 3)
+            return name = "Ring of Healthiness";
+        if(itemList[ID].itemType == 4)
+            return name = "Necklace of Healthiness";
+    }
+    case 2:
+    {
+        if(itemList[ID].itemType == 1)
+            return name = "Armour of Defence";
+        if(itemList[ID].itemType == 2)
+            return name = "Sword of Defence";
+        if(itemList[ID].itemType == 3)
+            return name = "Ring of Defence";
+        if(itemList[ID].itemType == 4)
+            return name = "Necklace of Defence";
+    }
+    case 3:
+    {
+        if(itemList[ID].itemType == 1)
+            return name = "Armour of Regeneration";
+        if(itemList[ID].itemType == 2)
+            return name = "Sword of Regeneration";
+        if(itemList[ID].itemType == 3)
+            return name = "Ring of Regeneration";
+        if(itemList[ID].itemType == 4)
+            return name = "Necklace of Regeneration";
+    }
+    case 4:
+    {
+        if(itemList[ID].itemType == 1)
+            return name = "Armour of Attack";
+        if(itemList[ID].itemType == 2)
+            return name = "Sword of Attack";
+        if(itemList[ID].itemType == 3)
+            return name = "Ring of Attack";
+        if(itemList[ID].itemType == 4)
+            return name = "Necklace of Attack";
+    }
 
     }
 
@@ -105,50 +105,50 @@ newItem createItem()
 
     switch(type)
     {
-        case 1:
-        {
-            item.itemType = 1;
-            item.symbol = 'A';
-            item.healthiness = rand()%20 - 10;
-            item.defensiveness = rand()%10 - 5;
-            item.regeneration = rand()%4 - 2;
-            item.damage = rand()%2 - 2;
-            //item.name = findDominantTrait(item);
-            break;
-        }
-        case 2:
-        {
-            item.itemType = 2;
-            item.symbol = '/';
-            item.healthiness = rand()%6 - 3;
-            item.defensiveness = rand()%5 - 2;
-            item.regeneration = rand()%3 - 1;
-            item.damage = rand()%10 -5;
-            //item.name = findDominantTrait(item);
-            break;
-        }
-        case 3:
-        {
-            item.itemType = 3;
-            item.symbol = 'O';
-            item.healthiness = rand()%20 - 10;
-            item.defensiveness = rand()%5 - 2;
-            item.regeneration = rand()%10 - 3;
-            item.damage = rand()%5 - 2;
-            //item.name = findDominantTrait(item);
-            break;
-        }
-        case 4:
-        {
-            item.itemType = 4;
-            item.symbol = 'U';
-            item.healthiness = rand()%20 - 10;
-            item.defensiveness = rand()%5 - 2;
-            item.regeneration = rand()%10 - 3;
-            item.damage = rand()%5 - 2;
-            //item.name = findDominantTrait(item);
-            break;
-        }
+    case 1:
+    {
+        item.itemType = 1;
+        item.symbol = 'A';
+        item.healthiness = rand()%20 - 10;
+        item.defensiveness = rand()%10 - 5;
+        item.regeneration = rand()%4 - 2;
+        item.damage = rand()%2 - 2;
+        //item.name = findDominantTrait(item);
+        break;
+    }
+    case 2:
+    {
+        item.itemType = 2;
+        item.symbol = '/';
+        item.healthiness = rand()%6 - 3;
+        item.defensiveness = rand()%5 - 2;
+        item.regeneration = rand()%3 - 1;
+        item.damage = rand()%10 -5;
+        //item.name = findDominantTrait(item);
+        break;
+    }
+    case 3:
+    {
+        item.itemType = 3;
+        item.symbol = 'O';
+        item.healthiness = rand()%20 - 10;
+        item.defensiveness = rand()%5 - 2;
+        item.regeneration = rand()%10 - 3;
+        item.damage = rand()%5 - 2;
+        //item.name = findDominantTrait(item);
+        break;
+    }
+    case 4:
+    {
+        item.itemType = 4;
+        item.symbol = 'U';
+        item.healthiness = rand()%20 - 10;
+        item.defensiveness = rand()%5 - 2;
+        item.regeneration = rand()%10 - 3;
+        item.damage = rand()%5 - 2;
+        //item.name = findDominantTrait(item);
+        break;
+    }
     }
     return item;
 }
@@ -248,9 +248,9 @@ void printPlacedItems(newItem placedItems[200],Generator& test, int placedItemsT
     for(int i = 0; i < placedItemsTotal; i++)
     {
         if(placedItems[i].taken == 0)
-        test.Map[placedItems[i].xPos][placedItems[i].yPos] = placedItems[i].symbol;
+            test.Map[placedItems[i].xPos][placedItems[i].yPos] = placedItems[i].symbol;
         else
-        test.Map[placedItems[i].xPos][placedItems[i].yPos] = placedItems[i].dominantTile;
+            test.Map[placedItems[i].xPos][placedItems[i].yPos] = placedItems[i].dominantTile;
     }
 }
 

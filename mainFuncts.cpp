@@ -206,7 +206,8 @@ void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMo
                 {
                     if(newPlayer.hasArmour >= 1)
                         newPlayer.hasArmour = 0;
-
+                    if(newPlayer.itemsOnPlayer>=1)
+                        newPlayer.itemsOnPlayer--;
                     playerBackpack[bpIndex].isWornNum = 0;
                     playerBackpack[bpIndex].isBPOccupied = 0;
                     break;
@@ -215,7 +216,8 @@ void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMo
                 {
                     if(newPlayer.isWieldingWeapon >= 1)
                         newPlayer.isWieldingWeapon = 0;
-
+                    if(newPlayer.itemsOnPlayer>=1)
+                        newPlayer.itemsOnPlayer--;
                     playerBackpack[bpIndex].isWornNum = 0;
                     playerBackpack[bpIndex].isBPOccupied = 0;
                     break;
@@ -224,7 +226,8 @@ void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMo
                 {
                     if(newPlayer.isWearingRings >= 1)
                         newPlayer.isWearingRings--;
-
+                    if(newPlayer.itemsOnPlayer>=1)
+                        newPlayer.itemsOnPlayer--;
                     playerBackpack[bpIndex].isWornNum = 0;
                     playerBackpack[bpIndex].isBPOccupied = 0;
                     break;
@@ -232,8 +235,9 @@ void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMo
                 else if(playerBackpack[bpIndex].itemType == 4)
                 {
                     if(newPlayer.carriesNecklace >= 1)
-                    newPlayer.carriesNecklace = 0;
-
+                        newPlayer.carriesNecklace = 0;
+                    if(newPlayer.itemsOnPlayer>=1)
+                        newPlayer.itemsOnPlayer--;
                     playerBackpack[bpIndex].isWornNum = 0;
                     playerBackpack[bpIndex].isBPOccupied = 0;
                     break;
@@ -540,7 +544,7 @@ void handleMonsterActions(newMonster monsterList[16], Generator& test, player& n
             case 3:
             {
                 if(test.isLegitMoveMonster(monsterList[i].xPos, monsterList[i].yPos + 1) == 1)
-                 {
+                {
                     monsterList[i].yPos++;
                 }
                 break;
