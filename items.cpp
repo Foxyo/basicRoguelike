@@ -216,6 +216,7 @@ int placeItemsInRooms(newItem itemList[500], Generator& test, newItem placedItem
             placedItems[i] = itemList[rollItemID];
 
             itemList[rollItemID].taken = 0;
+            placedItems[i].placedIndex = i;
             placedItems[i].taken = 0;
             placedItemsTotal++;
 
@@ -224,11 +225,32 @@ int placeItemsInRooms(newItem itemList[500], Generator& test, newItem placedItem
     return placedItemsTotal;
 }
 
+void printPlacedItemsInfo(newItem placedItems[200], int placedItemsTotal)
+{
+    for(int i = 0; i < placedItemsTotal; i++)
+    {
+        cout << "Item name: " << placedItems[i].name << endl;
+        cout << "Item type: " << placedItems[i].itemType << endl;
+        cout << "Damage: " << placedItems[i].damage << endl;
+        cout << "Defence: " << placedItems[i].defensiveness << endl;
+        cout << "Regeneration: " << placedItems[i].regeneration << endl;
+        cout << "Health: " << placedItems[i].healthiness << endl;
+        cout << "ID: " << placedItems[i].ID << endl;
+        cout << "Symbol: " << placedItems[i].symbol << endl;
+        cout << "Dominant tile: " << placedItems[i].dominantTile << endl;
+    }
+}
+
+
+
 void printPlacedItems(newItem placedItems[200],Generator& test, int placedItemsTotal)
 {
     for(int i = 0; i < placedItemsTotal; i++)
     {
         if(placedItems[i].taken == 0)
         test.Map[placedItems[i].xPos][placedItems[i].yPos] = placedItems[i].symbol;
+        else
+        test.Map[placedItems[i].xPos][placedItems[i].yPos] = placedItems[i].dominantTile;
     }
 }
+

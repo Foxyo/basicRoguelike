@@ -3,7 +3,38 @@
 #include <stdio.h>
 #include "mainFuncts.h"
 
-void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMonster monsterList[16])
+void handlePlayerStatus(player& newPlayer, newItem playerBackpack[30])
+{
+    for(int i = 0; i < 30; i++)
+    {
+        if(playerBackpack[i].isWornNum == 1 && playerBackpack[i].bonusAddedYet == 0)
+        {
+            playerBackpack[i].bonusAddedYet = 1;
+            newPlayer.additionalHealth = playerBackpack[i].healthiness;
+            newPlayer.armourDefence = playerBackpack[i].defensiveness;
+            newPlayer.regeneration = playerBackpack[i].regeneration;
+            newPlayer.weaponDamage = playerBackpack[i].damage;
+
+            newPlayer.health += newPlayer.additionalHealth;
+            newPlayer.attackDamage += newPlayer.weaponDamage;
+            newPlayer.defence += newPlayer.armourDefence;
+        }
+        if(playerBackpack[i].isWornNum == 0 && playerBackpack[i].bonusAddedYet == 1)
+        {
+            playerBackpack[i].bonusAddedYet = 0;
+
+            newPlayer.health -= newPlayer.additionalHealth;
+            newPlayer.attackDamage -= newPlayer.weaponDamage;
+            newPlayer.defence -= newPlayer.armourDefence;
+            newPlayer.regeneration = 0;
+        }
+
+    }
+    if(newPlayer.health < 100)
+    newPlayer.health += newPlayer.regeneration;
+}
+
+void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMonster monsterList[16], newItem playerBackpack[30], newItem itemList[500], newItem placedItems[200])
 {
     system("stty raw");
     char input = getchar();
@@ -59,6 +90,38 @@ void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMo
             placeMonsters(test, lastTile, monsterList);
             test.mapDraw();
         }
+        if(isItem(test, newPlayer.xPos, newPlayer.yPos) == 1 && newPlayer.itemsOnPlayer < 30)
+        {
+            int IID = findPlacedItemIndex(newPlayer.xPos, newPlayer.yPos, test, placedItems);
+            playerBackpack[newPlayer.itemsOnPlayer] = placedItems[IID];
+            playerBackpack[newPlayer.itemsOnPlayer].isBPOccupied = 1;
+            playerBackpack[newPlayer.itemsOnPlayer].backpackIndex = newPlayer.itemsOnPlayer;
+            newPlayer.itemsOnPlayer++;
+
+            takeItem(test, newPlayer.xPos, newPlayer.yPos, placedItems, IID);
+        }
+        break;
+    }
+    case 'i':
+    {
+        printPlayerBackpack(playerBackpack, newPlayer);
+        cout << "What would you like to do?" << endl;
+        char c = getchar();
+        switch(c)
+        {
+            case 'e':
+            {
+            int bpIndex;
+            cout << "Provide backpack index of item you'd like to wear " << endl;
+            cin >> bpIndex;
+            playerBackpack[bpIndex].isWorn = "Yes";
+            playerBackpack[bpIndex].isWornNum = 1;
+            break;
+            }
+        }
+
+
+
         break;
     }
     case '\x20':
@@ -124,6 +187,50 @@ void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMo
     lastTile = test.Map[newPlayer.xPos][newPlayer.yPos];
     test.Map[newPlayer.xPos][newPlayer.yPos] = '@';
 }
+void takeItem(Generator& test, int x, int y, newItem placedItems[200], int IID)
+{
+    placedItems[IID].taken = 1;
+    test.Map[x][y] = placedItems[IID].dominantTile;
+
+}
+int findPlacedItemIndex(int x, int y, Generator& test, newItem placedItems[200])
+{
+    int IID;
+    for(int i = 0; i < 200; i++)
+    {
+        if(placedItems[i].xPos == x && placedItems[i].yPos == y)
+        {
+            IID = placedItems[i].placedIndex;
+            return IID;
+        }
+
+    }
+}
+
+void printPlayerBackpack(newItem playerBackpack[30], player newPlayer)
+{
+    for(int i = 0; i < newPlayer.itemsOnPlayer; i++)
+    {
+        cout << "Item name: " << playerBackpack[i].name << endl;
+        cout << "Damage: " << playerBackpack[i].damage << endl;
+        cout << "Defence: " << playerBackpack[i].defensiveness << endl;
+        cout << "Regeneration: " << playerBackpack[i].regeneration << endl;
+        cout << "Health: " << playerBackpack[i].healthiness << endl;
+        cout << "Index in backpack" << playerBackpack[i].backpackIndex << endl;
+        if(playerBackpack[i].isWornNum == 1)
+            cout << "Currently wearing" << endl;
+        cout << endl;
+
+    }
+
+}
+
+int isItem(Generator& test, int x, int y)
+{
+    if(test.Map[x][y] == 'A' || test.Map[x][y] == 'O' || test.Map[x][y] == '/' || test.Map[x][y] == 'U')
+        return 1;
+    else return 0;
+}
 
 int isMonster(int x, int y, Generator& test)
 {
@@ -143,7 +250,7 @@ void checkIfDead(int ID, newMonster monsterList[16], Generator& test)
 }
 void attackMonster(int ID, newMonster monsterList[16], int damage)
 {
-    int damageDealt = damage = monsterList[ID].armour;
+    int damageDealt = damage - monsterList[ID].armour;
     if(damageDealt < 1)
         damageDealt = 1;
     monsterList[ID].health -= damageDealt;
@@ -230,7 +337,7 @@ void monstersBehOneInfo(newMonster monsterList[16], Generator& test)
 
 void displayPlayerInfo(player& newPlayer)
 {
-    cout << "Health: " << newPlayer.health << "    " << "Armor: " << newPlayer.defence << "    " << "Dmg: " << newPlayer.attackDamage;
+    cout << "Health: " << newPlayer.health << "    " << "Armor: " << newPlayer.defence << "    " << "Dmg: " << newPlayer.attackDamage << endl;
 }
 int isPlayer(int x, int y, Generator& test)
 {
@@ -348,5 +455,7 @@ void handleMonsterActions(newMonster monsterList[16], Generator& test, player& n
 
 
 }
+
+
 
 

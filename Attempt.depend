@@ -7,7 +7,7 @@
 	<cstdlib>
 	<time.h>
 
-1487047929 source:/home/fox/Desktop/ProjektA/Attempt/main.cpp
+1487053783 source:/home/fox/Desktop/ProjektA/Attempt/main.cpp
 	<iostream>
 	<cstdlib>
 	<stdio.h>
@@ -19,9 +19,10 @@
 	<thread>
 	<chrono>
 
-1487038654 /home/fox/Desktop/ProjektA/Attempt/mainFuncts.h
+1487053774 /home/fox/Desktop/ProjektA/Attempt/mainFuncts.h
 	<iostream>
 	<cstdlib>
+	"items.h"
 	"Generator.h"
 	"monsters.h"
 
@@ -33,7 +34,7 @@
 	"Generator.h"
 	"mainFuncts.h"
 
-1487039407 source:/home/fox/Desktop/ProjektA/Attempt/mainFuncts.cpp
+1487053961 source:/home/fox/Desktop/ProjektA/Attempt/mainFuncts.cpp
 	<iostream>
 	<cstdlib>
 	<stdio.h>
@@ -53,13 +54,13 @@
 	<stdio.h>
 	<stdlib.h>
 
-1487048072 source:/home/fox/Desktop/ProjektA/Attempt/items.cpp
+1487051374 source:/home/fox/Desktop/ProjektA/Attempt/items.cpp
 	<iostream>
 	<cstdio>
 	"items.h"
 	<string>
 
-1487047626 /home/fox/Desktop/ProjektA/Attempt/items.h
+1487053590 /home/fox/Desktop/ProjektA/Attempt/items.h
 	<iostream>
 	<cstdlib>
 	<string>

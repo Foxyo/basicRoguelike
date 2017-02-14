@@ -27,6 +27,7 @@ int main()
     newMonster monsterList[16];
     newItem itemList[500];
     newItem placedItems[200];
+    newItem playerBackpack[30];
     itemArray(itemList);
     //printItemProperties(itemList);
 
@@ -41,19 +42,23 @@ int main()
     placeMonsters(test, lastTile, monsterList);
     monstersBehOneInfo(monsterList, test);
     int placedItemsTotal = placeItemsInRooms(itemList, test, placedItems);
+    printPlacedItemsInfo(placedItems, placedItemsTotal);
+    printPlacedItems(placedItems, test, placedItemsTotal);
     //monstersInfoPrint(monsterList, test);
     //test.logicMapDraw();
     test.mapDraw();
 
     while(newPlayer.health > 0)
     {
-        printPlacedItems(placedItems, test, placedItemsTotal);
-        handlePlayerInput(newPlayer, lastTile, test, monsterList);
+        handlePlayerInput(newPlayer, lastTile, test, monsterList, playerBackpack, itemList, placedItems);
+        handlePlayerStatus(newPlayer, playerBackpack);
+
         if(turns > 0)
         handleMonsterActions(monsterList, test, newPlayer);
         //monstersBehOneInfo(monsterList, test);
         //monstersInfoPrint(monsterList, test);
         test.mapDraw();
+        printPlacedItems(placedItems, test, placedItemsTotal);
         displayPlayerInfo(newPlayer);
         //test.logicMapDraw();
         turns++;
