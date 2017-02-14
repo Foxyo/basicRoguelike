@@ -50,6 +50,7 @@ int main()
 
     while(newPlayer.health > 0)
     {
+        handleLevelUps(newPlayer);
         handlePlayerInput(newPlayer, lastTile, test, monsterList, playerBackpack, itemList, placedItems, placedItemsTotal);
         handlePlayerStatus(newPlayer, playerBackpack);
 

@@ -324,6 +324,32 @@ void Generator::flipOsToDot()
     }
 }
 
+bool Generator::visitedArrayInit()
+{
+    for(int y = 0; y < map_height; y++)
+    {
+        for(int x = 0; x < map_width; x++)
+            visitedArray[x][y] = false;
+    }
+}
+
+bool Generator::visitedArrayCalc(int x, int y)
+{
+    visitedArray[x][y] = true;
+    visitedArray[x+1][y] = true;
+    visitedArray[x+2][y] = true;
+    visitedArray[x-1][y] = true;
+    visitedArray[x-2][y] = true;
+    visitedArray[x][y+1] = true;
+    visitedArray[x][y+2] = true;
+    visitedArray[x][y-1] = true;
+    visitedArray[x][y-2] = true;
+    visitedArray[x+1][y+1] = true;
+    visitedArray[x+1][y-1] = true;
+    visitedArray[x-1][y-1] = true;
+    visitedArray[x-1][y+1] = true;
+}
+
 int Generator::checkIfValidInit(int width, int heigth, int edgeX, int edgeY)
 {
     if(Map[edgeX][edgeY] != ' ')
@@ -485,6 +511,8 @@ void Generator::mapDraw()
     {
         for(int x = 0; x < map_width; x++)
         {
+            if(visitedArray[x][y] == true)
+            {
             if(Map[x][y] == '#')
                 cout << "\033[0;33m" << Map[x][y];
             if(Map[x][y] == 'H')
@@ -493,6 +521,9 @@ void Generator::mapDraw()
                 cout << "\033[0;35m" << Map[x][y];
             if(Map[x][y]!='#' && Map[x][y]!='H' && Map[x][y]!='@')
                 cout << "\033[0m" << Map[x][y];
+            }
+            else cout << " ";
+
         }
         cout << "\n";
     }

@@ -62,6 +62,7 @@ void createMonster(newMonster monsterList[16])
         monsterList[i].symbol = mob.symbol;
         monsterList[i].attackDamage = mob.attackDamage;
         monsterList[i].ID = i;
+        monsterList[i].gaveExp = 0;
     }
 
 }

@@ -34,6 +34,22 @@ void handlePlayerStatus(player& newPlayer, newItem playerBackpack[30])
     newPlayer.health += newPlayer.regeneration;
 }
 
+int findLowerUnoccupiedBPIndex(newItem playerBackpack[30])
+{
+    int Index;
+
+    for(int i = 0; i < 30; i++)
+    {
+
+        if(playerBackpack[i].isBPOccupied == 0)
+        {
+            Index = i;
+            return Index;
+        }
+
+    }
+}
+
 void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMonster monsterList[16], newItem playerBackpack[30], newItem itemList[500], newItem placedItems[200], int& placedItemsTotal)
 {
     system("stty raw");
@@ -95,9 +111,10 @@ void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMo
         if(isItem(test, newPlayer.xPos, newPlayer.yPos) == 1 && newPlayer.itemsOnPlayer < 30)
         {
             int IID = findPlacedItemIndex(newPlayer.xPos, newPlayer.yPos, test, placedItems);
-            playerBackpack[newPlayer.itemsOnPlayer] = placedItems[IID];
-            playerBackpack[newPlayer.itemsOnPlayer].isBPOccupied = 1;
-            playerBackpack[newPlayer.itemsOnPlayer].backpackIndex = newPlayer.itemsOnPlayer;
+            int index = findLowerUnoccupiedBPIndex(playerBackpack);
+            playerBackpack[index] = placedItems[IID];
+            playerBackpack[index].isBPOccupied = 1;
+            playerBackpack[index].backpackIndex = index;
             newPlayer.itemsOnPlayer++;
 
             takeItem(test, newPlayer.xPos, newPlayer.yPos, placedItems, IID);
@@ -116,33 +133,48 @@ void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMo
             int bpIndex;
             cout << "Provide backpack index of item you'd like to wear " << endl;
             cin >> bpIndex;
-            if(newPlayer.isWearingRings!=2)
+            if(playerBackpack[bpIndex].isBPOccupied != 0 && playerBackpack[bpIndex].isWornNum == 0)
             {
-                playerBackpack[bpIndex].isWornNum = 1;
-                newPlayer.isWearingRings++;
-            } else
-            {
-                cout << "You're already wearing two rings, try something else!" << endl;
+
+                if(newPlayer.isWearingRings!=2)
+                {
+                    playerBackpack[bpIndex].isWornNum = 1;
+                    newPlayer.isWearingRings++;
+                } else
+                {
+                    cout << "You're already wearing two rings, try something else!" << endl;
+                }
+                if(newPlayer.isWieldingWeapon!=1)
+                {
+                    playerBackpack[bpIndex].isWornNum = 1;
+                    newPlayer.isWieldingWeapon = 1;
+                }
+                else cout << "You are already wielding a weapon, the heck you're trying to do, you're basically nobody, not a goddam rambo!" << endl;
+                if(newPlayer.hasArmour!=1)
+                {
+                    playerBackpack[bpIndex].isWorn = 1;
+                    newPlayer.hasArmour = 1;
+                }
+                else cout << "It ain't winter matey, aspiring to be a sumo-huge?" << endl;
+                if(newPlayer.carriesNecklace!=1)
+                {
+                    playerBackpack[bpIndex].isWorn = 1;
+                    newPlayer.carriesNecklace = 1;
+                }
+                else cout << "Wanna die from suffocation? It ain't your time yet. More is to come." << endl;
+                break;
+                }
             }
-            if(newPlayer.isWieldingWeapon!=1)
+
+            case 'd':
             {
-                playerBackpack[bpIndex].isWornNum = 1;
-                newPlayer.isWieldingWeapon = 1;
-            }
-            else cout << "You are already wielding a weapon, the heck you're trying to do, you're basically nobody, not a goddam rambo!" << endl;
-            if(newPlayer.hasArmour!=1)
-            {
-                playerBackpack[bpIndex].isWorn = 1;
-                newPlayer.hasArmour = 1;
-            }
-            else cout << "It ain't winter matey, aspiring to be a sumo-huge?" << endl;
-            if(newPlayer.carriesNecklace!=1)
-            {
-                playerBackpack[bpIndex].isWorn = 1;
-                newPlayer.carriesNecklace = 1;
-            }
-            else cout << "Wanna die from suffocation? It ain't your time yet. More is to come." << endl;
-            break;
+                int bpIndex;
+                cout << "Which item(index) would you like to DELETE from inventory?" << endl;
+                cin >> bpIndex;
+                playerBackpack[bpIndex].isWornNum = 0;
+                playerBackpack[bpIndex].isBPOccupied = 0;
+                break;
+
             }
         }
 
@@ -165,7 +197,7 @@ void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMo
             int ID = findMonsterID(newPlayer.xPos-1, newPlayer.yPos, monsterList);
             monstersInfoPrint(monsterList, test);
             attackMonster(ID, monsterList, newPlayer.attackDamage);
-            checkIfDead(ID, monsterList, test);
+            checkIfDead(ID, monsterList, test, newPlayer);
         }
         break;
     }
@@ -176,7 +208,7 @@ void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMo
             int ID = findMonsterID(newPlayer.xPos+1, newPlayer.yPos, monsterList);
             monstersInfoPrint(monsterList, test);
             attackMonster(ID, monsterList, newPlayer.attackDamage);
-            checkIfDead(ID, monsterList, test);
+            checkIfDead(ID, monsterList, test, newPlayer);
         }
         break;
     }
@@ -187,7 +219,7 @@ void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMo
             int ID = findMonsterID(newPlayer.xPos, newPlayer.yPos-1, monsterList);
             monstersInfoPrint(monsterList, test);
             attackMonster(ID, monsterList, newPlayer.attackDamage);
-            checkIfDead(ID, monsterList, test);
+            checkIfDead(ID, monsterList, test, newPlayer);
         }
         break;
     }
@@ -198,7 +230,7 @@ void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMo
             int ID = findMonsterID(newPlayer.xPos, newPlayer.yPos+1, monsterList);
             monstersInfoPrint(monsterList, test);
             attackMonster(ID, monsterList, newPlayer.attackDamage);
-            checkIfDead(ID, monsterList, test);
+            checkIfDead(ID, monsterList, test, newPlayer);
         }
         break;
     }
@@ -209,7 +241,7 @@ void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMo
     }
     }
 
-
+    test.visitedArrayCalc(newPlayer.xPos, newPlayer.yPos);
     lastTile = test.Map[newPlayer.xPos][newPlayer.yPos];
     test.Map[newPlayer.xPos][newPlayer.yPos] = '@';
 }
@@ -269,13 +301,23 @@ int isMonster(int x, int y, Generator& test)
     else return 0;
 }
 
-void checkIfDead(int ID, newMonster monsterList[16], Generator& test)
+void checkIfDead(int ID, newMonster monsterList[16], Generator& test, player& newPlayer)
 {
-    if(monsterList[ID].health < 0)
+    if(monsterList[ID].health < 0 && monsterList[ID].gaveExp == 0)
     {
         test.Map[monsterList[ID].xPos][monsterList[ID].yPos] = monsterList[ID].dominantTile;
         monsterList[ID].xPos = 0;
         monsterList[ID].yPos = 0;
+        if(monsterList[ID].symbol == 'G')
+            newPlayer.experience += 5;
+        if(monsterList[ID].symbol == 'B')
+            newPlayer.experience += 3;
+        if(monsterList[ID].symbol == 'x')
+            newPlayer.experience += 2;
+        if(monsterList[ID].symbol == 'T')
+            newPlayer.experience += 20;
+
+
     }
 }
 void attackMonster(int ID, newMonster monsterList[16], int damage)
@@ -364,10 +406,22 @@ void monstersBehOneInfo(newMonster monsterList[16], Generator& test)
     }
 
 }
+void handleLevelUps(player& newPlayer)
+{
+    if(newPlayer.experience > 15)
+    {
+        newPlayer.experience = 0;
+        newPlayer.attackDamage++;
+        newPlayer.health += 5;
+        newPlayer.defence += 1;
+        newPlayer.level++;
+    }
+
+}
 
 void displayPlayerInfo(player& newPlayer)
 {
-    cout << "Health: " << newPlayer.health << "    " << "Armor: " << newPlayer.defence << "    " << "Dmg: " << newPlayer.attackDamage << endl;
+    cout << "Health: " << newPlayer.health << "    " << "Armor: " << newPlayer.defence << "    " << "Dmg: " << newPlayer.attackDamage << "    " <<  "Level: " << newPlayer.level << "    " << "Experience: " << newPlayer.experience << endl;
 }
 int isPlayer(int x, int y, Generator& test)
 {

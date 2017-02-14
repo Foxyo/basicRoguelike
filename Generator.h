@@ -18,9 +18,12 @@ public:
     int isLegitMoveMonster(int x, int y);
     int isLegitMove(int x, int y);
     int endRoomCount;
+    bool visitedArrayInit();
+    bool visitedArrayCalc(int x, int y);
 
     // Łatwo dostępna mapa
     char Map[map_width][map_height];
+    bool visitedArray[map_width][map_height];
     char logicMap[map_width][map_height];
     int ladderxPos[2];
     int ladderyPos[2];
