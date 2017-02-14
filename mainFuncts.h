@@ -20,11 +20,15 @@ typedef struct player
     int weaponDamage;
     int regeneration;
     int additionalHealth;
+    int isWearingRings = 0;
+    int isWieldingWeapon = 0;
+    int hasArmour = 0;
+    int carriesNecklace = 0;
 
 } player;
 
 
-void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMonster monsterList[16], newItem playerBackpack[30], newItem itemList[500], newItem placedItems[200]);
+void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMonster monsterList[16], newItem playerBackpack[30], newItem itemList[500], newItem placedItems[200], int& placedItemsTotal);
 void printRoomsParameters(Generator& test);
 void printRoomEdges(Generator& test);
 void monstersInfoPrint(newMonster monsterList[16], Generator& test);

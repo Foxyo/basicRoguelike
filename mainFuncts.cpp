@@ -34,7 +34,7 @@ void handlePlayerStatus(player& newPlayer, newItem playerBackpack[30])
     newPlayer.health += newPlayer.regeneration;
 }
 
-void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMonster monsterList[16], newItem playerBackpack[30], newItem itemList[500], newItem placedItems[200])
+void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMonster monsterList[16], newItem playerBackpack[30], newItem itemList[500], newItem placedItems[200], int& placedItemsTotal)
 {
     system("stty raw");
     char input = getchar();
@@ -88,6 +88,8 @@ void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMo
             lastTile = test.Map[test.ladderxPos[0]][test.ladderyPos[0]];
             createMonster(monsterList);
             placeMonsters(test, lastTile, monsterList);
+            itemArray(itemList);
+            placedItemsTotal = placeItemsInRooms(itemList, test, placedItems);
             test.mapDraw();
         }
         if(isItem(test, newPlayer.xPos, newPlayer.yPos) == 1 && newPlayer.itemsOnPlayer < 30)
@@ -114,8 +116,32 @@ void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMo
             int bpIndex;
             cout << "Provide backpack index of item you'd like to wear " << endl;
             cin >> bpIndex;
-            playerBackpack[bpIndex].isWorn = "Yes";
-            playerBackpack[bpIndex].isWornNum = 1;
+            if(newPlayer.isWearingRings!=2)
+            {
+                playerBackpack[bpIndex].isWornNum = 1;
+                newPlayer.isWearingRings++;
+            } else
+            {
+                cout << "You're already wearing two rings, try something else!" << endl;
+            }
+            if(newPlayer.isWieldingWeapon!=1)
+            {
+                playerBackpack[bpIndex].isWornNum = 1;
+                newPlayer.isWieldingWeapon = 1;
+            }
+            else cout << "You are already wielding a weapon, the heck you're trying to do, you're basically nobody, not a goddam rambo!" << endl;
+            if(newPlayer.hasArmour!=1)
+            {
+                playerBackpack[bpIndex].isWorn = 1;
+                newPlayer.hasArmour = 1;
+            }
+            else cout << "It ain't winter matey, aspiring to be a sumo-huge?" << endl;
+            if(newPlayer.carriesNecklace!=1)
+            {
+                playerBackpack[bpIndex].isWorn = 1;
+                newPlayer.carriesNecklace = 1;
+            }
+            else cout << "Wanna die from suffocation? It ain't your time yet. More is to come." << endl;
             break;
             }
         }
@@ -209,8 +235,10 @@ int findPlacedItemIndex(int x, int y, Generator& test, newItem placedItems[200])
 
 void printPlayerBackpack(newItem playerBackpack[30], player newPlayer)
 {
-    for(int i = 0; i < newPlayer.itemsOnPlayer; i++)
+    for(int i = 0; i < 30; i++)
     {
+        if(playerBackpack[i].isBPOccupied == 1)
+        {
         cout << "Item name: " << playerBackpack[i].name << endl;
         cout << "Damage: " << playerBackpack[i].damage << endl;
         cout << "Defence: " << playerBackpack[i].defensiveness << endl;
@@ -220,6 +248,8 @@ void printPlayerBackpack(newItem playerBackpack[30], player newPlayer)
         if(playerBackpack[i].isWornNum == 1)
             cout << "Currently wearing" << endl;
         cout << endl;
+        }
+
 
     }
 

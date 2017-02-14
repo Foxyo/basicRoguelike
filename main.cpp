@@ -50,7 +50,7 @@ int main()
 
     while(newPlayer.health > 0)
     {
-        handlePlayerInput(newPlayer, lastTile, test, monsterList, playerBackpack, itemList, placedItems);
+        handlePlayerInput(newPlayer, lastTile, test, monsterList, playerBackpack, itemList, placedItems, placedItemsTotal);
         handlePlayerStatus(newPlayer, playerBackpack);
 
         if(turns > 0)
