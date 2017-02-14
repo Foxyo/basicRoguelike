@@ -39,7 +39,7 @@ int main()
     //test.logicMapDraw();
     test.mapDraw();
 
-    while(1)
+    while(newPlayer.health > 0)
     {
         handlePlayerInput(newPlayer, lastTile, test, monsterList);
         if(turns > 0)

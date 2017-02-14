@@ -25,3 +25,4 @@ void checkIfDead(int ID, newMonster monsterList[16], Generator& test);
 void attackMonster(int ID, newMonster monsterList[16], int damage);
 int findMonsterID(int x, int y, newMonster monsterList[16]);
 int isMonster(int x, int y, Generator& test);
+int isPlayer(int x, int y, Generator& test);
