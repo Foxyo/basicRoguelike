@@ -5,6 +5,7 @@
 #include "Generator.h"
 #include "mainFuncts.h"
 #include "monsters.h"
+#include "items.h"
 #include <thread>
 #include <chrono>
 
@@ -24,6 +25,9 @@ int main()
     player newPlayer;
     Generator test;
     newMonster monsterList[16];
+    newItem itemList[500];
+    itemArray(itemList);
+    printItemProperties(itemList);
 
     char lastTile = test.Map[test.ladderxPos[0]][test.ladderyPos[0]];
     newPlayer.xPos = test.ladderxPos[0];
