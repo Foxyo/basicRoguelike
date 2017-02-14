@@ -534,14 +534,14 @@ void Generator::makeDoorsHappen()
 }
 int Generator::isLegitMove(int x, int y)
 {
-    if(Map[x][y] == '.' || Map[x][y] == 'H' || Map[x][y] == '+')
+    if(Map[x][y] == '.' || Map[x][y] == 'H' || Map[x][y] == '+' || Map[x][y] == '/' || Map[x][y] == 'U' || Map[x][y] == 'A' || Map[x][y] == 'O')
         return 1;
     else return 0;
 }
 
 int Generator::isLegitMoveMonster(int x, int y)
 {
-    if(Map[x][y] == '.' || Map[x][y] == '+')
+    if(Map[x][y] == '.' || Map[x][y] == '+' || Map[x][y] == '/' || Map[x][y] == 'U' || Map[x][y] == 'A' || Map[x][y] == 'O')
         return 1;
     else return 0;
 }

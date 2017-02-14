@@ -26,8 +26,9 @@ int main()
     Generator test;
     newMonster monsterList[16];
     newItem itemList[500];
+    newItem placedItems[200];
     itemArray(itemList);
-    printItemProperties(itemList);
+    //printItemProperties(itemList);
 
     char lastTile = test.Map[test.ladderxPos[0]][test.ladderyPos[0]];
     newPlayer.xPos = test.ladderxPos[0];
@@ -39,12 +40,14 @@ int main()
     createMonster(monsterList);
     placeMonsters(test, lastTile, monsterList);
     monstersBehOneInfo(monsterList, test);
+    int placedItemsTotal = placeItemsInRooms(itemList, test, placedItems);
     //monstersInfoPrint(monsterList, test);
     //test.logicMapDraw();
     test.mapDraw();
 
     while(newPlayer.health > 0)
     {
+        printPlacedItems(placedItems, test, placedItemsTotal);
         handlePlayerInput(newPlayer, lastTile, test, monsterList);
         if(turns > 0)
         handleMonsterActions(monsterList, test, newPlayer);

@@ -108,6 +108,7 @@ newItem createItem()
         case 1:
         {
             item.itemType = 1;
+            item.symbol = 'A';
             item.healthiness = rand()%20 - 10;
             item.defensiveness = rand()%10 - 5;
             item.regeneration = rand()%4 - 2;
@@ -118,6 +119,7 @@ newItem createItem()
         case 2:
         {
             item.itemType = 2;
+            item.symbol = '/';
             item.healthiness = rand()%6 - 3;
             item.defensiveness = rand()%5 - 2;
             item.regeneration = rand()%3 - 1;
@@ -128,6 +130,7 @@ newItem createItem()
         case 3:
         {
             item.itemType = 3;
+            item.symbol = 'O';
             item.healthiness = rand()%20 - 10;
             item.defensiveness = rand()%5 - 2;
             item.regeneration = rand()%10 - 3;
@@ -138,6 +141,7 @@ newItem createItem()
         case 4:
         {
             item.itemType = 4;
+            item.symbol = 'U';
             item.healthiness = rand()%20 - 10;
             item.defensiveness = rand()%5 - 2;
             item.regeneration = rand()%10 - 3;
@@ -155,6 +159,7 @@ void itemArray(newItem itemList[500])
     {
         newItem item = createItem();
         itemList[i].itemType = item.itemType;
+        itemList[i].symbol = item.symbol;
         itemList[i].healthiness = item.healthiness;
         itemList[i].defensiveness = item.defensiveness;
         itemList[i].regeneration = item.regeneration;
@@ -175,5 +180,55 @@ void printItemProperties(newItem itemList[500])
         cout << "Regeneration: " << itemList[i].regeneration << endl;
         cout << "Health: " << itemList[i].healthiness << endl;
         cout << "ID: " << itemList[i].ID << endl;
+        cout << "Symbol: " << itemList[i].symbol << endl;
+    }
+}
+
+int placeItemsInRooms(newItem itemList[500], Generator& test, newItem placedItems[200])
+{
+    int placedItemsTotal = 0;
+    for(int i = 0; i < test.endRoomCount; i++)
+    {
+        int rollItemID = rand()%500 + 1;
+        int xPos = rand()%test.roomWidth[i]+1;
+        int yPos = rand()%test.roomHeight[i]+1;
+        itemList[rollItemID].xPosInit = xPos;
+        itemList[rollItemID].yPosInit = yPos;
+        itemList[rollItemID].xPos = xPos + test.fRoomEdgesX[i];
+        itemList[rollItemID].yPos = yPos + test.fRoomEdgesY[i];
+
+        if(xPos + test.fRoomEdgesX[i] >= test.lRoomEdgesX[i])
+        {
+            xPos = xPos - 3;
+            itemList[rollItemID].xPos -= 3;
+        }
+
+        if(yPos + test.fRoomEdgesY[i] >= test.lRoomEdgesY[i])
+        {
+            yPos = yPos - 3;
+            itemList[rollItemID].yPos -= 3;
+        }
+
+        if(test.Map[xPos + test.fRoomEdgesX[i]][yPos + test.fRoomEdgesY[i]] == '.')
+        {
+            itemList[rollItemID].dominantTile = test.Map[test.fRoomEdgesX[i] + xPos][test.fRoomEdgesY[i] + yPos];
+            test.Map[test.fRoomEdgesX[i] + xPos][test.fRoomEdgesY[i] + yPos] = itemList[rollItemID].symbol;
+            placedItems[i] = itemList[rollItemID];
+
+            itemList[rollItemID].taken = 0;
+            placedItems[i].taken = 0;
+            placedItemsTotal++;
+
+        }
+    }
+    return placedItemsTotal;
+}
+
+void printPlacedItems(newItem placedItems[200],Generator& test, int placedItemsTotal)
+{
+    for(int i = 0; i < placedItemsTotal; i++)
+    {
+        if(placedItems[i].taken == 0)
+        test.Map[placedItems[i].xPos][placedItems[i].yPos] = placedItems[i].symbol;
     }
 }
