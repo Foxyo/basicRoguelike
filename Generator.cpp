@@ -507,6 +507,7 @@ void Generator::Generate()
 
 void Generator::mapDraw()
 {
+    cout << "\033[2J\033[1;1H";
     for(int y = 0; y < map_height; y++)
     {
         for(int x = 0; x < map_width; x++)
@@ -570,7 +571,7 @@ void Generator::makeDoorsHappen()
 }
 int Generator::isLegitMove(int x, int y)
 {
-    if(Map[x][y] == '.' || Map[x][y] == 'H' || Map[x][y] == '+' || Map[x][y] == '/' || Map[x][y] == 'U' || Map[x][y] == 'A' || Map[x][y] == 'O')
+    if(Map[x][y] == '.' || Map[x][y] == 'H' || Map[x][y] == '+' || Map[x][y] == '/' || Map[x][y] == 'U' || Map[x][y] == 'A' || Map[x][y] == 'O' || Map[x][y] == '*')
         return 1;
     else return 0;
 }

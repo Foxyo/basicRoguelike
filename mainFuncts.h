@@ -3,6 +3,8 @@
 #include "items.h"
 #include "Generator.h"
 #include "monsters.h"
+#include <thread>
+#include <chrono>
 #ifndef LISELLOCH_MAINFUNCTS_H
 #define LISELLOCH_MAINFUNCTS_H
 
@@ -25,6 +27,7 @@ typedef struct player
     int hasArmour = 0;
     int carriesNecklace = 0;
     int level = 0;
+    int monstersKilled = 0;
 } player;
 
 void handleLevelUps(player& newPlayer);
@@ -46,6 +49,7 @@ void takeItem(Generator& test, int x, int y, newItem placedItems[200], int IID);
 void printPlayerBackpack(newItem playerBackpack[30], player newPlayer);
 void handlePlayerStatus(player& newPlayer, newItem playerBackpack[30]);
 int findLowerUnoccupiedBPIndex(newItem playerBackpack[30]);
+void wonOrLostMsg(int wonOrLost, player& newPlayer);
 
 
 #endif // LISELLOCH_MAINFUNCTS_H

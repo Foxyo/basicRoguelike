@@ -375,6 +375,7 @@ void checkIfDead(int ID, newMonster monsterList[16], Generator& test, player& ne
         test.Map[monsterList[ID].xPos][monsterList[ID].yPos] = monsterList[ID].dominantTile;
         monsterList[ID].xPos = 0;
         monsterList[ID].yPos = 0;
+        newPlayer.monstersKilled++;
         if(monsterList[ID].symbol == 'G')
             newPlayer.experience += 5;
         if(monsterList[ID].symbol == 'B')
@@ -604,6 +605,29 @@ void handleMonsterActions(newMonster monsterList[16], Generator& test, player& n
         }
     }
 
+
+}
+
+void wonOrLostMsg(int wonOrLost, player& newPlayer)
+{
+    cout << "\033[2J\033[1;1H";
+    if(wonOrLost == 1)
+    {
+
+        cout << "Congratulations!" << endl;
+        this_thread::sleep_for(chrono::milliseconds(1000));
+        cout << "You did beat this awkward game, somewhat, somehow" << endl;
+        this_thread::sleep_for(chrono::milliseconds(1000));
+        cout << "On your way you've achieved level " << newPlayer.level << " collecting " << newPlayer.experience + newPlayer.level*15 << " Experience points!" << endl;
+        this_thread::sleep_for(chrono::milliseconds(1000));
+        cout << "You've also bested " << newPlayer.monstersKilled << " enemies!" << endl;
+        this_thread::sleep_for(chrono::milliseconds(1000));
+        cout << "Good luck in future!" << endl;
+        cout << "Press any key to contine" << endl;
+        char a = getchar();
+    }
+    else
+        cout << "YOU LOST" << endl;
 
 }
 

@@ -8,14 +8,17 @@
 #include "items.h"
 #include <thread>
 #include <chrono>
-
+#include <time.h>
 
 using namespace std;
 
-int victoryCondition = rand()%2+1;
+
 
 int main()
 {
+    srand(time(NULL));
+    int gameDepth = rand()%10+3;
+    //int gameDepth = 0;
     player newPlayer;
     Generator test;
     newMonster monsterList[16];
@@ -41,10 +44,47 @@ int main()
     //test.addSpecialItem(test.ladderxPos, test.ladderyPos);
     //monstersInfoPrint(monsterList, test);
     //test.logicMapDraw();
+    system("clear");
+    cout << "You've got no idea why you'd let that old crook make you to visit this forsaken place." << endl;
+    this_thread::sleep_for(chrono::milliseconds(700));
+    cout << "Perhaps it was the need of these shiny gold pieces that convinced you...?" << endl;
+    this_thread::sleep_for(chrono::milliseconds(700));
+    cout << "Anyway..." << endl;
+    this_thread::sleep_for(chrono::milliseconds(700));
+    cout << "From what you've been told, this hell 'o a hole has multiple levels." << endl;
+    this_thread::sleep_for(chrono::milliseconds(700));
+    cout << "..." << gameDepth << " to be exact." << endl;
+    this_thread::sleep_for(chrono::milliseconds(700));
+    cout << "...and it ain't particularly safe there either. With goblins, trolls, spiders..." << endl;
+    cout << "You gulp silently, as you descend to the lair and the sunlight starts to fade." << endl;
+    this_thread::sleep_for(chrono::milliseconds(700));
+    cout << "Press any key to continue..." << endl;
+    system("stty raw");
+    char temp = getchar();
+    system("stty cooked");
+
+    int isSet = 0;
+    int wonOrLost;
+
     test.mapDraw();
 
-    while(newPlayer.health > 0)
+    while(1)
     {
+        if(newPlayer.xPos == test.ladderxPos[1] && test.ladderyPos[1] == newPlayer.yPos)
+        {
+            wonOrLost = 1;
+            break;
+        }
+        if(newPlayer.health <= 0)
+        {
+            wonOrLost = 0;
+            break;
+        }
+        if(levelsGenerated == gameDepth && isSet!=1)
+        {
+            test.addSpecialItem(test.ladderxPos, test.ladderyPos);
+            isSet = 1;
+        }
         handleLevelUps(newPlayer);
         handlePlayerInput(newPlayer, lastTile, test, monsterList, playerBackpack, itemList, placedItems, placedItemsTotal, levelsGenerated);
         handlePlayerStatus(newPlayer, playerBackpack);
@@ -66,6 +106,7 @@ int main()
 
         // cout<<lastTile << " " << turns;
     }
+    wonOrLostMsg(wonOrLost, newPlayer);
     return 0;
 }
 
