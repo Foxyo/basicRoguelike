@@ -1,13 +1,13 @@
 # depslib dependency file v1.0
-1487061283 source:/home/fox/Desktop/ProjektA/Attempt/Generator.cpp
+1487078134 source:/home/fox/Desktop/ProjektA/Attempt/Generator.cpp
 	"Generator.h"
 	<iostream>
 
-1487061124 /home/fox/Desktop/ProjektA/Attempt/Generator.h
+1487078117 /home/fox/Desktop/ProjektA/Attempt/Generator.h
 	<cstdlib>
 	<time.h>
 
-1487060273 source:/home/fox/Desktop/ProjektA/Attempt/main.cpp
+1487078661 source:/home/fox/Desktop/ProjektA/Attempt/main.cpp
 	<iostream>
 	<cstdlib>
 	<stdio.h>
@@ -19,7 +19,7 @@
 	<thread>
 	<chrono>
 
-1487060345 /home/fox/Desktop/ProjektA/Attempt/mainFuncts.h
+1487078651 /home/fox/Desktop/ProjektA/Attempt/mainFuncts.h
 	<iostream>
 	<cstdlib>
 	"items.h"
@@ -34,7 +34,7 @@
 	"Generator.h"
 	"mainFuncts.h"
 
-1487061150 source:/home/fox/Desktop/ProjektA/Attempt/mainFuncts.cpp
+1487061507 source:/home/fox/Desktop/ProjektA/Attempt/mainFuncts.cpp
 	<iostream>
 	<cstdlib>
 	<stdio.h>

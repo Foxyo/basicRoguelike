@@ -20,6 +20,7 @@ public:
     int endRoomCount;
     bool visitedArrayInit();
     bool visitedArrayCalc(int x, int y);
+    void addSpecialItem(int ladderxPos[1], int ladderyPos[1]);
 
     // Łatwo dostępna mapa
     char Map[map_width][map_height];

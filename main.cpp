@@ -12,20 +12,14 @@
 
 using namespace std;
 
-/*typedef struct player
-{
-    int xPos;
-    int yPos;
-}player;*/
-
-
+int victoryCondition = rand()%2+1;
 
 int main()
 {
     player newPlayer;
     Generator test;
     newMonster monsterList[16];
-    newItem itemList[500];
+    newItem itemList[501];
     newItem placedItems[200];
     newItem playerBackpack[30];
     itemArray(itemList);
@@ -34,16 +28,17 @@ int main()
     char lastTile = test.Map[test.ladderxPos[0]][test.ladderyPos[0]];
     newPlayer.xPos = test.ladderxPos[0];
     newPlayer.yPos = test.ladderyPos[0];
-    cout<<lastTile;
     int turns = 0;
+    int levelsGenerated = 0;
     //printRoomEdges(test);
     //printRoomsParameters(test);
     createMonster(monsterList);
     placeMonsters(test, lastTile, monsterList);
-    monstersBehOneInfo(monsterList, test);
+    //monstersBehOneInfo(monsterList, test);
     int placedItemsTotal = placeItemsInRooms(itemList, test, placedItems);
-    printPlacedItemsInfo(placedItems, placedItemsTotal);
+    //printPlacedItemsInfo(placedItems, placedItemsTotal);
     printPlacedItems(placedItems, test, placedItemsTotal);
+    //test.addSpecialItem(test.ladderxPos, test.ladderyPos);
     //monstersInfoPrint(monsterList, test);
     //test.logicMapDraw();
     test.mapDraw();
@@ -51,7 +46,7 @@ int main()
     while(newPlayer.health > 0)
     {
         handleLevelUps(newPlayer);
-        handlePlayerInput(newPlayer, lastTile, test, monsterList, playerBackpack, itemList, placedItems, placedItemsTotal);
+        handlePlayerInput(newPlayer, lastTile, test, monsterList, playerBackpack, itemList, placedItems, placedItemsTotal, levelsGenerated);
         handlePlayerStatus(newPlayer, playerBackpack);
 
         if(turns > 0)
@@ -61,6 +56,7 @@ int main()
         test.mapDraw();
         printPlacedItems(placedItems, test, placedItemsTotal);
         displayPlayerInfo(newPlayer);
+        cout << "Dungeon depth: "<< levelsGenerated;
         //test.logicMapDraw();
         turns++;
         this_thread::sleep_for(chrono::milliseconds(10));

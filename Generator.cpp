@@ -529,6 +529,11 @@ void Generator::mapDraw()
     }
 }
 
+void Generator::addSpecialItem(int ladderxPos[1], int ladderyPos[1])
+{
+    Map[ladderxPos[1]][ladderyPos[1]] = '*';
+}
+
 int Generator::countAdjacentWalls(int x, int y)
 {
     int adjacentWalls = 0;

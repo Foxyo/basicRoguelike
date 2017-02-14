@@ -50,7 +50,7 @@ int findLowerUnoccupiedBPIndex(newItem playerBackpack[30])
     }
 }
 
-void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMonster monsterList[16], newItem playerBackpack[30], newItem itemList[500], newItem placedItems[200], int& placedItemsTotal)
+void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMonster monsterList[16], newItem playerBackpack[30], newItem itemList[500], newItem placedItems[200], int& placedItemsTotal, int& levelsGenerated)
 {
     system("stty raw");
     char input = getchar();
@@ -105,6 +105,8 @@ void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMo
             createMonster(monsterList);
             placeMonsters(test, lastTile, monsterList);
             itemArray(itemList);
+            levelsGenerated++;
+            test.visitedArrayInit();
             placedItemsTotal = placeItemsInRooms(itemList, test, placedItems);
             test.mapDraw();
         }
@@ -114,6 +116,7 @@ void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMo
             int index = findLowerUnoccupiedBPIndex(playerBackpack);
             playerBackpack[index] = placedItems[IID];
             playerBackpack[index].isBPOccupied = 1;
+            playerBackpack[index].isWornNum = 0;
             playerBackpack[index].backpackIndex = index;
             newPlayer.itemsOnPlayer++;
 
@@ -130,40 +133,67 @@ void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMo
         {
             case 'e':
             {
+                cout << "stage1" << endl;
             int bpIndex;
             cout << "Provide backpack index of item you'd like to wear " << endl;
             cin >> bpIndex;
-            if(playerBackpack[bpIndex].isBPOccupied != 0 && playerBackpack[bpIndex].isWornNum == 0)
-            {
+            cout << "stage2" << endl;
 
-                if(newPlayer.isWearingRings!=2)
+            if(playerBackpack[bpIndex].isBPOccupied == 1 && playerBackpack[bpIndex].isWornNum == 0)
+            {
+                cout << "stage3" << endl;
+                if(newPlayer.isWearingRings!=2 && playerBackpack[bpIndex].itemType == 3)
                 {
+                    cout << "stage4" << endl;
                     playerBackpack[bpIndex].isWornNum = 1;
                     newPlayer.isWearingRings++;
-                } else
+                    break;
+                } else if(newPlayer.isWearingRings == 2 && playerBackpack[bpIndex].itemType == 3)
                 {
                     cout << "You're already wearing two rings, try something else!" << endl;
+                    break;
                 }
-                if(newPlayer.isWieldingWeapon!=1)
+                if(newPlayer.isWieldingWeapon == 0 && playerBackpack[bpIndex].itemType == 2)
                 {
+                    cout << "stage5" << endl;
                     playerBackpack[bpIndex].isWornNum = 1;
                     newPlayer.isWieldingWeapon = 1;
+                    break;
                 }
-                else cout << "You are already wielding a weapon, the heck you're trying to do, you're basically nobody, not a goddam rambo!" << endl;
-                if(newPlayer.hasArmour!=1)
+                else if(newPlayer.isWieldingWeapon == 1 && playerBackpack[bpIndex].itemType == 2)
                 {
-                    playerBackpack[bpIndex].isWorn = 1;
+                    cout << "You are already wielding a weapon, the heck you're trying to do, you're basically nobody, not a goddam rambo!" << endl;
+                    break;
+                }
+
+                if(newPlayer.hasArmour == 0 && playerBackpack[bpIndex].itemType == 1)
+                {
+                    cout << "stage6" << endl;
+                    playerBackpack[bpIndex].isWornNum = 1;
                     newPlayer.hasArmour = 1;
+                    break;
                 }
-                else cout << "It ain't winter matey, aspiring to be a sumo-huge?" << endl;
-                if(newPlayer.carriesNecklace!=1)
+                else if(newPlayer.hasArmour == 1 && playerBackpack[bpIndex].itemType == 1)
                 {
-                    playerBackpack[bpIndex].isWorn = 1;
+                    cout << "It ain't winter matey, aspiring to be a sumo-huge?" << endl;
+                    break;
+                }
+                if(newPlayer.carriesNecklace == 0 && playerBackpack[bpIndex].itemType == 4)
+                {
+                    cout << "stage7" << endl;
+                    playerBackpack[bpIndex].isWornNum = 1;
                     newPlayer.carriesNecklace = 1;
+                    break;
                 }
-                else cout << "Wanna die from suffocation? It ain't your time yet. More is to come." << endl;
-                break;
+                else if(newPlayer.carriesNecklace == 1 && playerBackpack[bpIndex].itemType == 4)
+                {
+                    cout << "Wanna die from suffocation? It ain't your time yet. More is to come." << endl;
+                    break;
                 }
+
+            }
+            break;
+
             }
 
             case 'd':
@@ -171,8 +201,44 @@ void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMo
                 int bpIndex;
                 cout << "Which item(index) would you like to DELETE from inventory?" << endl;
                 cin >> bpIndex;
-                playerBackpack[bpIndex].isWornNum = 0;
-                playerBackpack[bpIndex].isBPOccupied = 0;
+
+                if(playerBackpack[bpIndex].itemType == 1)
+                {
+                    if(newPlayer.hasArmour >= 1)
+                        newPlayer.hasArmour = 0;
+
+                    playerBackpack[bpIndex].isWornNum = 0;
+                    playerBackpack[bpIndex].isBPOccupied = 0;
+                    break;
+                }
+                else if(playerBackpack[bpIndex].itemType == 2)
+                {
+                    if(newPlayer.isWieldingWeapon >= 1)
+                        newPlayer.isWieldingWeapon = 0;
+
+                    playerBackpack[bpIndex].isWornNum = 0;
+                    playerBackpack[bpIndex].isBPOccupied = 0;
+                    break;
+                }
+                else if(playerBackpack[bpIndex].itemType == 3)
+                {
+                    if(newPlayer.isWearingRings >= 1)
+                        newPlayer.isWearingRings--;
+
+                    playerBackpack[bpIndex].isWornNum = 0;
+                    playerBackpack[bpIndex].isBPOccupied = 0;
+                    break;
+                }
+                else if(playerBackpack[bpIndex].itemType == 4)
+                {
+                    if(newPlayer.carriesNecklace >= 1)
+                    newPlayer.carriesNecklace = 0;
+
+                    playerBackpack[bpIndex].isWornNum = 0;
+                    playerBackpack[bpIndex].isBPOccupied = 0;
+                    break;
+                }
+
                 break;
 
             }
@@ -272,11 +338,12 @@ void printPlayerBackpack(newItem playerBackpack[30], player newPlayer)
         if(playerBackpack[i].isBPOccupied == 1)
         {
         cout << "Item name: " << playerBackpack[i].name << endl;
+        cout << "Item type: " << playerBackpack[i].itemType << endl;
         cout << "Damage: " << playerBackpack[i].damage << endl;
         cout << "Defence: " << playerBackpack[i].defensiveness << endl;
         cout << "Regeneration: " << playerBackpack[i].regeneration << endl;
         cout << "Health: " << playerBackpack[i].healthiness << endl;
-        cout << "Index in backpack" << playerBackpack[i].backpackIndex << endl;
+        cout << "Index in backpack: " << playerBackpack[i].backpackIndex << endl;
         if(playerBackpack[i].isWornNum == 1)
             cout << "Currently wearing" << endl;
         cout << endl;

@@ -28,7 +28,7 @@ typedef struct player
 } player;
 
 void handleLevelUps(player& newPlayer);
-void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMonster monsterList[16], newItem playerBackpack[30], newItem itemList[500], newItem placedItems[200], int& placedItemsTotal);
+void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMonster monsterList[16], newItem playerBackpack[30], newItem itemList[500], newItem placedItems[200], int& placedItemsTotal, int& levelsGenerated);
 void printRoomsParameters(Generator& test);
 void printRoomEdges(Generator& test);
 void monstersInfoPrint(newMonster monsterList[16], Generator& test);
@@ -46,4 +46,6 @@ void takeItem(Generator& test, int x, int y, newItem placedItems[200], int IID);
 void printPlayerBackpack(newItem playerBackpack[30], player newPlayer);
 void handlePlayerStatus(player& newPlayer, newItem playerBackpack[30]);
 int findLowerUnoccupiedBPIndex(newItem playerBackpack[30]);
+
+
 #endif // LISELLOCH_MAINFUNCTS_H
