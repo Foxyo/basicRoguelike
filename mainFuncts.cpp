@@ -137,20 +137,20 @@ void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMo
         {
             case 'e':
             {
-                //cout << "stage1" << endl;
+                cout << "stage1" << endl;
             int bpIndex;
             cout << "Provide backpack index of item you'd like to wear " << endl;
             cin >> bpIndex;
             if(bpIndex < 0 || bpIndex > 30)
             break;
-           // cout << "stage2" << endl;
+            cout << "stage2" << endl;
 
             if(playerBackpack[bpIndex].isBPOccupied == 1 && playerBackpack[bpIndex].isWornNum == 0)
             {
-                //cout << "stage3" << endl;
+                cout << "stage3" << endl;
                 if(newPlayer.isWearingRings!=2 && playerBackpack[bpIndex].itemType == 3)
                 {
-                    //cout << "stage4" << endl;
+                    cout << "stage4" << endl;
                     playerBackpack[bpIndex].isWornNum = 1;
                     newPlayer.isWearingRings++;
                     break;
@@ -162,7 +162,7 @@ void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMo
                 }
                 if(newPlayer.isWieldingWeapon == 0 && playerBackpack[bpIndex].itemType == 2)
                 {
-                    //cout << "stage5" << endl;
+                    cout << "stage5" << endl;
                     playerBackpack[bpIndex].isWornNum = 1;
                     newPlayer.isWieldingWeapon = 1;
                     break;
@@ -176,7 +176,7 @@ void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMo
 
                 if(newPlayer.hasArmour == 0 && playerBackpack[bpIndex].itemType == 1)
                 {
-                    //cout << "stage6" << endl;
+                    cout << "stage6" << endl;
                     playerBackpack[bpIndex].isWornNum = 1;
                     newPlayer.hasArmour = 1;
                     break;
@@ -189,7 +189,7 @@ void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMo
                 }
                 if(newPlayer.carriesNecklace == 0 && playerBackpack[bpIndex].itemType == 4)
                 {
-                    //cout << "stage7" << endl;
+                    cout << "stage7" << endl;
                     playerBackpack[bpIndex].isWornNum = 1;
                     newPlayer.carriesNecklace = 1;
                     break;
@@ -214,7 +214,7 @@ void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMo
 
                 if(playerBackpack[bpIndex].itemType == 1)
                 {
-                    if(newPlayer.hasArmour >= 1)
+                    if(newPlayer.hasArmour == 1)
                         newPlayer.hasArmour = 0;
                     if(newPlayer.itemsOnPlayer>=1)
                         newPlayer.itemsOnPlayer--;
@@ -224,7 +224,7 @@ void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMo
                 }
                 else if(playerBackpack[bpIndex].itemType == 2)
                 {
-                    if(newPlayer.isWieldingWeapon >= 1)
+
                         newPlayer.isWieldingWeapon = 0;
                     if(newPlayer.itemsOnPlayer>=1)
                         newPlayer.itemsOnPlayer--;
