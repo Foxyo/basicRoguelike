@@ -1,4 +1,6 @@
 #include <iostream>
+#include <thread>
+#include <chrono>
 #include <cstdlib>
 #include <stdio.h>
 #include "mainFuncts.h"
@@ -102,13 +104,14 @@ void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMo
             newPlayer.xPos = test.ladderxPos[0];
             newPlayer.yPos = test.ladderyPos[0];
             lastTile = test.Map[test.ladderxPos[0]][test.ladderyPos[0]];
-            createMonster(monsterList);
+            createMonster(monsterList, levelsGenerated);
             placeMonsters(test, lastTile, monsterList);
             itemArray(itemList);
             levelsGenerated++;
             test.visitedArrayInit();
             placedItemsTotal = placeItemsInRooms(itemList, test, placedItems);
-            test.mapDraw();
+            //test.mapDraw();
+            break;
         }
         if(isItem(test, newPlayer.xPos, newPlayer.yPos) == 1 && newPlayer.itemsOnPlayer < 30)
         {
@@ -121,6 +124,7 @@ void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMo
             newPlayer.itemsOnPlayer++;
 
             takeItem(test, newPlayer.xPos, newPlayer.yPos, placedItems, IID);
+            break;
         }
         break;
     }
@@ -133,54 +137,59 @@ void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMo
         {
             case 'e':
             {
-                cout << "stage1" << endl;
+                //cout << "stage1" << endl;
             int bpIndex;
             cout << "Provide backpack index of item you'd like to wear " << endl;
             cin >> bpIndex;
-            cout << "stage2" << endl;
+            if(bpIndex < 0 || bpIndex > 30)
+            break;
+           // cout << "stage2" << endl;
 
             if(playerBackpack[bpIndex].isBPOccupied == 1 && playerBackpack[bpIndex].isWornNum == 0)
             {
-                cout << "stage3" << endl;
+                //cout << "stage3" << endl;
                 if(newPlayer.isWearingRings!=2 && playerBackpack[bpIndex].itemType == 3)
                 {
-                    cout << "stage4" << endl;
+                    //cout << "stage4" << endl;
                     playerBackpack[bpIndex].isWornNum = 1;
                     newPlayer.isWearingRings++;
                     break;
                 } else if(newPlayer.isWearingRings == 2 && playerBackpack[bpIndex].itemType == 3)
                 {
                     cout << "You're already wearing two rings, try something else!" << endl;
+                    this_thread::sleep_for(chrono::milliseconds(1300));
                     break;
                 }
                 if(newPlayer.isWieldingWeapon == 0 && playerBackpack[bpIndex].itemType == 2)
                 {
-                    cout << "stage5" << endl;
+                    //cout << "stage5" << endl;
                     playerBackpack[bpIndex].isWornNum = 1;
                     newPlayer.isWieldingWeapon = 1;
                     break;
                 }
                 else if(newPlayer.isWieldingWeapon == 1 && playerBackpack[bpIndex].itemType == 2)
                 {
-                    cout << "You are already wielding a weapon, the heck you're trying to do, you're basically nobody, not a goddam rambo!" << endl;
+                    cout << "You are already wielding a weapon, the heck you're trying to do, you're not a goddam rambo" << endl;
+                    this_thread::sleep_for(chrono::milliseconds(1300));
                     break;
                 }
 
                 if(newPlayer.hasArmour == 0 && playerBackpack[bpIndex].itemType == 1)
                 {
-                    cout << "stage6" << endl;
+                    //cout << "stage6" << endl;
                     playerBackpack[bpIndex].isWornNum = 1;
                     newPlayer.hasArmour = 1;
                     break;
                 }
                 else if(newPlayer.hasArmour == 1 && playerBackpack[bpIndex].itemType == 1)
                 {
-                    cout << "It ain't winter matey, aspiring to be a sumo-huge?" << endl;
+                    cout << "It ain't winter matey to coat yerself like a goddam eskimo!" << endl;
+                    this_thread::sleep_for(chrono::milliseconds(1300));
                     break;
                 }
                 if(newPlayer.carriesNecklace == 0 && playerBackpack[bpIndex].itemType == 4)
                 {
-                    cout << "stage7" << endl;
+                    //cout << "stage7" << endl;
                     playerBackpack[bpIndex].isWornNum = 1;
                     newPlayer.carriesNecklace = 1;
                     break;
@@ -188,6 +197,7 @@ void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMo
                 else if(newPlayer.carriesNecklace == 1 && playerBackpack[bpIndex].itemType == 4)
                 {
                     cout << "Wanna die from suffocation? It ain't your time yet. More is to come." << endl;
+                    this_thread::sleep_for(chrono::milliseconds(1300));
                     break;
                 }
 
@@ -246,6 +256,8 @@ void handlePlayerInput(player& newPlayer, char& lastTile, Generator& test, newMo
                 break;
 
             }
+            default:
+                break;
         }
 
 
@@ -367,7 +379,7 @@ int isItem(Generator& test, int x, int y)
 
 int isMonster(int x, int y, Generator& test)
 {
-    if(test.Map[x][y] == 'G' || test.Map[x][y] == 'B' || test.Map[x][y] == 'x' || test.Map[x][y] == 'T')
+    if(test.Map[x][y] == 'G' || test.Map[x][y] == 'B' || test.Map[x][y] == 'x' || test.Map[x][y] == 'T' || test.Map[x][y] == 'W' || test.Map[x][y] == '-' || test.Map[x][y] == 'S')
         return 1;
     else return 0;
 }
@@ -480,13 +492,14 @@ void monstersBehOneInfo(newMonster monsterList[16], Generator& test)
 }
 void handleLevelUps(player& newPlayer)
 {
-    if(newPlayer.experience > 15)
+    if(newPlayer.experience >= 15)
     {
-        newPlayer.experience = 0;
+        newPlayer.experience -= 15;
         newPlayer.attackDamage++;
         newPlayer.health += 5;
         newPlayer.defence += 1;
         newPlayer.level++;
+        newPlayer.health += 30;
     }
 
 }

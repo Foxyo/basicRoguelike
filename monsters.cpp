@@ -5,57 +5,102 @@
 #include <stdlib.h>
 
 
-newMonster selectMonster()
+newMonster selectMonster(int& levelsGenerated)
 {
     int monsterType = rand()%4 + 1;
     newMonster mob;
+    if(levelsGenerated < 3)
+    {
+    switch(monsterType)
+    {
+        case 1: //spider
+        {
+            mob.symbol = 'x';
+            mob.health = 5;
+            mob.armour = 0;
+            mob.attackDamage = 2;
+            mob.behaviourType = 1; // random movement
+            break;
+        }
+        case 2: //goblin
+        {
+            mob.symbol = 'G';
+            mob.health = 10;
+            mob.armour = 0;
+            mob.attackDamage = 3;
+            mob.behaviourType = 2;
+            break; //mindless seeking
+        }
+        case 3://bat
+        {
+            mob.symbol = 'B';
+            mob.health = 7;
+            mob.armour = 1;
+            mob.attackDamage = 1;
+            mob.behaviourType = 1;
+            break; //random movement
+        }
+        case 4:
+        {
+            mob.symbol = 'T';
+            mob.health = 15;
+            mob.armour = 4;
+            mob.attackDamage = 3;
+            mob.behaviourType = 3;
+        }
+    }
+    return mob;
+    }
+    else if (levelsGenerated >= 3)
+    {
 
     switch(monsterType)
     {
-    case 1: //spider
-    {
-        mob.symbol = 'x';
-        mob.health = 5;
-        mob.armour = 0;
-        mob.attackDamage = 2;
-        mob.behaviourType = 1; // random movement
-        break;
-    }
-    case 2: //goblin
-    {
-        mob.symbol = 'G';
-        mob.health = 10;
-        mob.armour = 2;
-        mob.attackDamage = 3;
-        mob.behaviourType = 2;
-        break; //mindless seeking
-    }
-    case 3://bat
-    {
-        mob.symbol = 'B';
-        mob.health = 7;
-        mob.armour = 1;
-        mob.attackDamage = 1;
-        mob.behaviourType = 1;
-        break; //random movement
-    }
-    case 4:
-    {
-        mob.symbol = 'T';
-        mob.health = 15;
-        mob.armour = 4;
-        mob.attackDamage = 3;
-        mob.behaviourType = 3;
-    }
+        case 1: //skeleton
+        {
+            mob.symbol = 'S';
+            mob.health = 15;
+            mob.armour = 3;
+            mob.attackDamage = 5;
+            mob.behaviourType = 1; // random movement
+            break;
+        }
+        case 2: //goblin
+        {
+            mob.symbol = 'G';
+            mob.health = 20;
+            mob.armour = 2;
+            mob.attackDamage = 3;
+            mob.behaviourType = 2;
+            break; //mindless seeking
+        }
+        case 3://ghost
+        {
+            mob.symbol = '-';
+            mob.health = 40;
+            mob.armour = 5;
+            mob.attackDamage = 4;
+            mob.behaviourType = 2;
+            break; //seeker
+        }
+        case 4: //wyvern
+        {
+            mob.symbol = 'W';
+            mob.health = 150;
+            mob.armour = 10;
+            mob.attackDamage = 15;
+            mob.behaviourType = 3;
+        }
     }
     return mob;
+    }
 }
 
-void createMonster(newMonster monsterList[16])
+void createMonster(newMonster monsterList[16], int& levelsGenerated)
 {
     for(int i = 0; i < 16; i++)
     {
-        newMonster mob = selectMonster();
+        newMonster mob = selectMonster(levelsGenerated);
         monsterList[i].armour = mob.armour;
         monsterList[i].health = mob.health;
         monsterList[i].behaviourType = mob.behaviourType;

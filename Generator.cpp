@@ -507,9 +507,10 @@ void Generator::Generate()
 
 void Generator::mapDraw()
 {
-    cout << "\033[2J\033[1;1H";
+
     for(int y = 0; y < map_height; y++)
     {
+        cout << "\r";
         for(int x = 0; x < map_width; x++)
         {
             if(visitedArray[x][y] == true)
@@ -527,6 +528,7 @@ void Generator::mapDraw()
 
         }
         cout << "\n";
+
     }
 }
 

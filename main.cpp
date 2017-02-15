@@ -17,8 +17,8 @@ using namespace std;
 int main()
 {
     srand(time(NULL));
-    //int gameDepth = rand()%10+3;
-    int gameDepth = 1;
+    int gameDepth = rand()%10+3;
+    //int gameDepth = 1;
     player newPlayer;
     Generator test;
     newMonster monsterList[16];
@@ -35,7 +35,7 @@ int main()
     int levelsGenerated = 0;
     //printRoomEdges(test);
     //printRoomsParameters(test);
-    createMonster(monsterList);
+    createMonster(monsterList, levelsGenerated);
     placeMonsters(test, lastTile, monsterList);
     //monstersBehOneInfo(monsterList, test);
     int placedItemsTotal = placeItemsInRooms(itemList, test, placedItems);
@@ -66,11 +66,13 @@ int main()
     int isSet = 0;
     int wonOrLost;
 
-    test.mapDraw();
+    //test.mapDraw();
 
     while(1)
     {
-        cout << "pxPos pyPos lxPos lyPos"  << newPlayer.xPos << " " << newPlayer.yPos << " " << test.ladderxPos[1] << " " << test.ladderyPos[1] << endl;
+        cout << "\033[2J\033[1;1H";
+        //system("clear");
+        //cout << "pxPos pyPos lxPos lyPos"  << newPlayer.xPos << " " << newPlayer.yPos << " " << test.ladderxPos[1] << " " << test.ladderyPos[1] << endl;
         if(newPlayer.xPos == test.ladderxPos[1] && test.ladderyPos[1] == newPlayer.yPos && lastTile == '*')
         {
             wonOrLost = 1;
@@ -86,6 +88,13 @@ int main()
             test.addSpecialItem(test.ladderxPos, test.ladderyPos);
             isSet = 1;
         }
+
+        //placement1
+        test.mapDraw();
+        printPlacedItems(placedItems, test, placedItemsTotal);
+        displayPlayerInfo(newPlayer);
+
+
         handleLevelUps(newPlayer);
         handlePlayerInput(newPlayer, lastTile, test, monsterList, playerBackpack, itemList, placedItems, placedItemsTotal, levelsGenerated);
         handlePlayerStatus(newPlayer, playerBackpack);
@@ -94,13 +103,18 @@ int main()
             handleMonsterActions(monsterList, test, newPlayer);
         //monstersBehOneInfo(monsterList, test);
         //monstersInfoPrint(monsterList, test);
-        test.mapDraw();
-        printPlacedItems(placedItems, test, placedItemsTotal);
-        displayPlayerInfo(newPlayer);
-        cout << "Dungeon depth: "<< levelsGenerated;
+
+        //cout << "\033[2J\033[1;1H";
+        //placement2
+        //test.mapDraw();
+        //printPlacedItems(placedItems, test, placedItemsTotal);
+        //displayPlayerInfo(newPlayer);
+
+        //cout << "Dungeon depth: "<< levelsGenerated;
         //test.logicMapDraw();
         turns++;
         this_thread::sleep_for(chrono::milliseconds(10));
+        system("clear");
 
         // printRoomEdges(test);
         //printRoomsParameters(test);

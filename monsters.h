@@ -26,8 +26,8 @@ struct newMonster
 };
 
 
-void createMonster(newMonster monsterList[16]);
-newMonster selectMonster();
+void createMonster(newMonster monsterList[16], int& levelsGenerated);
+newMonster selectMonster(int& levelsGenerated);
 void placeMonsters(Generator &test, char &lastTile, newMonster monsterList[16]);
 
 
