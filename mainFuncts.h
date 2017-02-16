@@ -20,7 +20,7 @@ typedef struct player
     int itemsOnPlayer = 0;
     int armourDefence;
     int weaponDamage;
-    int regeneration;
+    int regeneration = 0;
     int additionalHealth;
     int isWearingRings = 0;
     int isWieldingWeapon = 0;

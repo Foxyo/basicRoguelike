@@ -20,7 +20,7 @@
 	<chrono>
 	<time.h>
 
-1487148930 /home/fox/Desktop/ProjektA/Attempt/mainFuncts.h
+1487180979 /home/fox/Desktop/ProjektA/Attempt/mainFuncts.h
 	<iostream>
 	<cstdlib>
 	"items.h"
@@ -37,7 +37,7 @@
 	"Generator.h"
 	"mainFuncts.h"
 
-1487152481 source:/home/fox/Desktop/ProjektA/Attempt/mainFuncts.cpp
+1487171435 source:/home/fox/Desktop/ProjektA/Attempt/mainFuncts.cpp
 	<iostream>
 	<thread>
 	<chrono>

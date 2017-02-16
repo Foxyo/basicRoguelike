@@ -52,47 +52,79 @@ string findDominantTrait(newItem itemList[500], int ID)
     {
     case 1:
     {
-        if(itemList[ID].itemType == 1)
-            return name = "Armour of Healthiness";
-        if(itemList[ID].itemType == 2)
-            return name = "Sword of Healthiness";
-        if(itemList[ID].itemType == 3)
-            return name = "Ring of Healthiness";
-        if(itemList[ID].itemType == 4)
+        if(itemList[ID].itemType == 1 && maxVal <= 0)
+            return name = "Terrible quality Armour of Healthiness";
+        else if(itemList[ID].itemType == 1)
+            return name = "Normal quality Armour of Healthiness";
+        if(itemList[ID].itemType == 2 && maxVal <= 0)
+            return name = "Terrible quality Sword of Healthiness";
+        else if(itemList[ID].itemType == 2)
+            return name = "Normal quality Sword of Healthiness";
+        if(itemList[ID].itemType == 3 && maxVal <= 0)
+            return name = "Terrible quality Ring of Healthiness";
+        else if(itemList[ID].itemType == 3)
+            return "Normal quality Ring of Healthiness";
+        if(itemList[ID].itemType == 4 && maxVal >= 0)
             return name = "Necklace of Healthiness";
+        else if(itemList[ID].itemType == 4)
+            return name = "Terrible quality Necklace of Healthiness";
     }
     case 2:
     {
-        if(itemList[ID].itemType == 1)
+        if(itemList[ID].itemType == 1 && maxVal >= 0)
             return name = "Armour of Defence";
-        if(itemList[ID].itemType == 2)
+        else if(itemList[ID].itemType == 1)
+            return name = "Terrible quality Armour of defence";
+        if(itemList[ID].itemType == 2 && maxVal >= 0)
             return name = "Sword of Defence";
-        if(itemList[ID].itemType == 3)
+        else if(itemList[ID].itemType == 2)
+            return name = "Terrible quality Sword of Defence";
+        if(itemList[ID].itemType == 3 && maxVal >= 0)
             return name = "Ring of Defence";
-        if(itemList[ID].itemType == 4)
+        else if(itemList[ID].itemType == 3 && maxVal >= 0)
+            return name = "Terrible quality ring of Defence";
+        if(itemList[ID].itemType == 4 && maxVal >= 0)
             return name = "Necklace of Defence";
+        else if(itemList[ID].itemType == 4)
+            return name = "Terrible quality Necklace of Defence";
     }
     case 3:
     {
-        if(itemList[ID].itemType == 1)
+        if(itemList[ID].itemType == 1 && maxVal >= 0)
             return name = "Armour of Regeneration";
-        if(itemList[ID].itemType == 2)
+        else if(itemList[ID].itemType == 1)
+            return name = "Terrible quality Armour of Regeneration";
+        if(itemList[ID].itemType == 2 && maxVal >= 0)
             return name = "Sword of Regeneration";
-        if(itemList[ID].itemType == 3)
+        else if(itemList[ID].itemType == 2)
+            return name = "Terrible quality Sword of Regeneration";
+        if(itemList[ID].itemType == 3 && maxVal >= 0)
             return name = "Ring of Regeneration";
-        if(itemList[ID].itemType == 4)
+        else if(itemList[ID].itemType == 3)
+            return name = "Terrible quality Ring of Regeneration";
+        if(itemList[ID].itemType == 4 && maxVal >= 0)
             return name = "Necklace of Regeneration";
+        else if(itemList[ID].itemType == 4)
+            return name = "Terrible quality Necklace of Regeneration";
     }
     case 4:
     {
-        if(itemList[ID].itemType == 1)
-            return name = "Armour of Attack";
-        if(itemList[ID].itemType == 2)
-            return name = "Sword of Attack";
-        if(itemList[ID].itemType == 3)
-            return name = "Ring of Attack";
-        if(itemList[ID].itemType == 4)
+        if(itemList[ID].itemType == 1 && maxVal >= 0)
+            return name = "Normal quality spiked armour";
+        else if(itemList[ID].itemType == 1)
+            return name = "Terrible quality spiked armour";
+        if(itemList[ID].itemType == 2 && maxVal >= 0)
+            return name = "Sharp sword";
+        else if(itemList[ID].itemType == 2)
+            return name = "Rusty sword";
+        if(itemList[ID].itemType == 3 && maxVal >= 0)
+            return name = "Ring of Strenght";
+        else if(itemList[ID].itemType == 3)
+            return name = "Flaccid muscle ring";
+        if(itemList[ID].itemType == 4 && maxVal >= 0)
             return name = "Necklace of Attack";
+        else if(itemList[ID].itemType == 4)
+            return name = "Choking necklace";
     }
 
     }
